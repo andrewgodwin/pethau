@@ -22,6 +22,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "imagekit",
+    "accounts",
+    "assets",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +64,9 @@ DATABASES = {
     "default": env.db(),
 }
 
+
+# Custom user model
+AUTH_USER_MODEL = "accounts.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
