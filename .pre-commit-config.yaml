@@ -37,11 +37,10 @@ repos:
       - id: isort
         args: ["--profile=black"]
 
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.1
     hooks:
-      - id: flake8
-        exclude: "(_pb2\\.py)"
+      - id: ruff
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v2.3.0

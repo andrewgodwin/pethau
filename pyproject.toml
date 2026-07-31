@@ -13,6 +13,21 @@ dependencies = [
     "django-imagekit>=6.1.0",
 ]
 
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+ignore = [
+    "E203",
+    "E266",
+    "E402",
+    "F405",
+    "E501",
+    "E731",
+    # Mutable class defaults are the standard Django idiom (e.g. list_display)
+    "RUF012",
+]
+
 [tool.docformatter]
 make-summary-multi-line = true
 pre-summary-newline = true
