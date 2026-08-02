@@ -27,6 +27,9 @@ class Image(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title or self.image.name
+
 
 class Attachment(models.Model):
     """A file attachment such as a manual."""
@@ -37,18 +40,32 @@ class Attachment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title or self.file.name
+
 
 class Model(models.Model):
     """A model that an asset can be."""
 
     name = models.CharField(max_length=255)
     manufacturer = models.CharField(max_length=255, blank=True, null=True)
+    short_name = models.CharField(max_length=255, blank=True, null=True)
 
     images = models.ManyToManyField(Image, blank=True, related_name="models")
     attachments = models.ManyToManyField(Attachment, blank=True, related_name="models")
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def display_name(self):
+        if self.short_name:
+            return self.short_name
+        if self.manufacturer:
+            return f"{self.manufacturer} {self.name}"
+        return self.name
+
+    def __str__(self):
+        return self.display_name()
 
 
 class Asset(models.Model):
@@ -76,6 +93,11 @@ class Asset(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        if self.name:
+            return f"{self.tag} ({self.name})"
+        return self.tag
+
 
 class AssetHistory(models.Model):
     """Tracks an asset's current checked-in/out status as well as audits"""
@@ -91,13 +113,16 @@ class AssetHistory(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="histories")
     when = models.DateTimeField(auto_now_add=True)
 
-    status = models.CharField(
-        max_length=255, blank=True, null=True, choices=STATUS_CHOICES
-    )
+    status = models.CharField(max_length=255, blank=True, null=True, choices=STATUS_CHOICES)
     location = models.CharField(max_length=255, blank=True, null=True)
 
     images = models.ManyToManyField(Image, blank=True, related_name="asset_histories")
-    attachments = models.ManyToManyField(
-        Attachment, blank=True, related_name="asset_histories"
-    )
+    attachments = models.ManyToManyField(Attachment, blank=True, related_name="asset_histories")
     notes = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Asset History"
+        verbose_name_plural = "Asset Histories"
+
+    def __str__(self):
+        return f"{self.asset} @ {self.when:%Y-%m-%d %H:%M}"
