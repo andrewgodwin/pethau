@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+import urlman
 from django.conf import settings
 from django.db import models
 from imagekit.models import ImageSpecField
@@ -112,6 +113,11 @@ class Asset(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class urls(urlman.Urls):
+        view = "/assets/{self.id}/"
+        edit = "{view}edit/"
+        delete = "{view}delete/"
 
     def __str__(self):
         if self.name:

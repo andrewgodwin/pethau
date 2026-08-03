@@ -9,10 +9,37 @@
     <a class="main" href="{% url 'asset-create' %}">New</a>
 </div>
 
-<div class="asset-list">
+<div class="item-list">
+    <div class="item-header">
+        <span class="tag">Tag / Name</span>
+        <span class="status">Status</span>
+        <span class="location">Location</span>
+        <span class="item-actions">Actions</span>
+    </div>
     {% for asset in assets %}
-    <div class="asset-item">
-        <a href="">{{ asset.name }} {{ asset.tag }}</a>
+    <div class="item-entry">
+        <a href="{{ asset.urls.view }}" class="tag">
+            {{ asset.tag }}
+            <span class="name">{{ asset.name }}</span>
+        </a>
+        <span class="status">
+            {% if asset.status %}
+                {{ asset.status }}
+            {% else %}
+                <span class="empty-value">(unknown)</span>
+            {% endif %}
+        </span>
+        <span class="location">
+            {% if asset.location %}
+                {{ asset.location }}
+            {% else %}
+                <span class="empty-value">(unknown)</span>
+            {% endif %}
+        </span>
+        <span class="item-actions">
+            <a href="{{ asset.urls.edit }}"><i class="fas fa-edit"></i></a>
+            <a href="{{ asset.urls.delete }}" class="delete"><i class="fas fa-trash"></i></a>
+        </span>
     </div>
     {% endfor %}
 </div>

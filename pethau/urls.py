@@ -18,11 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from assets.views.create import AssetCreateView
-from assets.views.lists import AssetListView
+from assets.views.asset import AssetCreateView, AssetDetailView, AssetListView
 
 urlpatterns = [
     path("", AssetListView.as_view(), name="asset-list"),
+    path("assets/", AssetListView.as_view(), name="asset-create"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
+    path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
     path("admin/", admin.site.urls),
 ]
