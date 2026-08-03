@@ -226,6 +226,59 @@ small screens.
     background: var(--highlight-color-hover);
 }
 
+/* --- Context Boxes --- */
+
+.context-box {
+    background: var(--content-bar-background);
+    border-radius: 0.3rem;
+    margin: 1rem 0.5rem;
+}
+
+.context-box h1 {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    background: var(--sidebar-highlight);
+    color: var(--sidebar-highlight-text);
+    font-size: 1.2rem;
+    border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.context-box .footer {
+    padding: 0.5rem 0.6rem;
+    background: var(--content-bar-item);
+    border-radius: 0 0 0.3rem 0.3rem;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.context-box .footer button {
+    border-radius: 0.3rem;
+}
+
+/* --- Forms --- */
+
+.context-box .pure-control-group {
+    margin-bottom: 0.7rem;
+}
+
+.context-box fieldset {
+    padding: 1rem;
+}
+
+.context-box input[type="text"],
+.context-box textarea,
+.context-box select {
+    width: 30rem;
+}
+
+.context-box .error {
+    display: block;
+    color: #b00020;
+    font-size: 0.9em;
+}
+
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
 /*

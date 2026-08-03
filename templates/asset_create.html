@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}New Asset{% endblock title %}
+
+{% block content %}
+<form method="post" class="pure-form pure-form-aligned asset-form context-box">
+    <h1>New Asset</h1>
+
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <fieldset>
+        {% for field in form %}
+        <div class="pure-control-group field-{{ field.name }}">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+            <span class="help-text">{{ field.help_text }}</span>
+            {% endif %}
+            {% for error in field.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+    </fieldset>
+    <div class="footer">
+        <button type="submit" class="pure-button pure-button-primary">Create</button>
+        <a class="pure-button cancel" href="{% url 'asset-list' %}">Cancel</a>
+    </div>
+</form>
+{% endblock content %}
