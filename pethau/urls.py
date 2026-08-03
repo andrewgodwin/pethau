@@ -18,6 +18,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from assets.views.lists import AssetListView
+
 urlpatterns = [
+    path("", AssetListView.as_view(), name="asset-list"),
     path("admin/", admin.site.urls),
 ]
