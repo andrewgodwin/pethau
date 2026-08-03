@@ -8,4 +8,13 @@
     <a href="#"><i class="fas fa-refresh"></i></a>
     <a class="main" href="{% url 'asset-create' %}">New</a>
 </div>
+
+<div class="asset-list">
+    {% for asset in assets %}
+    <div class="asset-item">
+        <a href="">{{ asset.name }} {{ asset.tag }}</a>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock content %}

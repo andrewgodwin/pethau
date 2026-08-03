@@ -13,6 +13,11 @@ DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = ["*"]
 
+# Pethau settings
+
+ASSET_TAG_PREFIX = env("ASSET_TAG_PREFIX")
+ASSET_TAG_DIGITS = env.int("ASSET_TAG_DIGITS")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,20 +61,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "pethau.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {
     "default": env.db(),
 }
 
-
-# Custom user model
 AUTH_USER_MODEL = "accounts.User"
-
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,18 +82,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [

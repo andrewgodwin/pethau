@@ -6,3 +6,4 @@ from assets.models import Asset
 class AssetListView(ListView):
     model = Asset
     template_name = "asset_list.html"
+    context_object_name = "assets"

@@ -17,19 +17,19 @@
     {% endif %}
 
     <fieldset>
-        {% for field in form %}
-        <div class="pure-control-group field-{{ field.name }}">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-            <span class="help-text">{{ field.help_text }}</span>
-            {% endif %}
-            {% for error in field.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endfor %}
-
+        {% include "_field.html" with field=form.tag %}
+        {% include "_field.html" with field=form.owner %}
+        {% include "_field.html" with field=form.model %}
+    </fieldset>
+    <fieldset>
+        <legend>Info</legend>
+        {% include "_field.html" with field=form.name %}
+        {% include "_field.html" with field=form.description %}
+    </fieldset>
+    <fieldset>
+        <legend>Extra</legend>
+        {% include "_field.html" with field=form.serial %}
+        {% include "_field.html" with field=form.notes %}
     </fieldset>
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">Create</button>

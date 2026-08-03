@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from django.conf import settings
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
@@ -68,6 +69,19 @@ class Model(models.Model):
         return self.display_name()
 
 
+class Owner(models.Model):
+    """An owner of an asset."""
+
+    name = models.CharField(max_length=255)
+    notes = models.TextField(blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Asset(models.Model):
     """A thing, with a unique identifier."""
 
@@ -77,6 +91,12 @@ class Asset(models.Model):
 
     images = models.ManyToManyField(Image, blank=True, related_name="assets")
     attachments = models.ManyToManyField(Attachment, blank=True, related_name="assets")
+
+    owner = models.ForeignKey(
+        Owner,
+        on_delete=models.PROTECT,
+        related_name="assets",
+    )
 
     current_history = models.ForeignKey(
         "AssetHistory",
@@ -97,6 +117,21 @@ class Asset(models.Model):
         if self.name:
             return f"{self.tag} ({self.name})"
         return self.tag
+
+    @classmethod
+    def next_tag(cls) -> str:
+        prefix = settings.ASSET_TAG_PREFIX
+        # Get highest tag (lexical sort should be fine)
+        highest_tag = cls.objects.order_by("-tag").first()
+        if highest_tag and highest_tag.tag.startswith(prefix):
+            highest_number = int(highest_tag.tag[len(prefix) :])
+        else:
+            highest_number = 0
+        for i in range(100):
+            new_tag = f"{prefix}{str(highest_number + i + 1).zfill(5)}"
+            if not cls.objects.filter(tag=new_tag).exists():
+                return new_tag
+        raise ValueError("Failed to generate unique tag")
 
 
 class AssetHistory(models.Model):

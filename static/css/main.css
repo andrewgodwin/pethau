@@ -4,7 +4,8 @@
     --highlight-color-hover: #20b66a;
     --highlight-color-text: #fff;
     --content-background: #fafafa;
-    --content-text: #556;
+    --content-text: #445;
+    --content-text-secondary: #667;
     --content-bar-background: #c9d3dd;
     --content-bar-item: #a9b3bd;
     --content-bar-item-hover: #99a3ad;
@@ -271,12 +272,30 @@ small screens.
 .context-box textarea,
 .context-box select {
     width: 30rem;
+    background: var(--content-background);
+    color: var(--content-text);
+}
+
+.context-box legend {
+    margin: 0.2rem 0 -0.8rem 0;
+    padding-left: 11.5em;
+    border-bottom: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--content-text-secondary);
 }
 
 .context-box .error {
     display: block;
     color: #b00020;
     font-size: 0.9em;
+}
+
+.context-box .pure-control-group.required label::before {
+    content: "\2022";
+    color: #b00020;
+    margin-right: 0.3rem;
 }
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
