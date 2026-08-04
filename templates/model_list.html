@@ -32,6 +32,7 @@
 
 <div class="item-list">
     <div class="item-header">
+        <span class="item-thumb"></span>
         <span class="tag">Name</span>
         <span class="col2">Manufacturer</span>
         <span class="col3">Short Name</span>
@@ -39,6 +40,13 @@
     </div>
     {% for model in models %}
     <div class="item-entry {% cycle 'odd' 'even' %}">
+        <span class="item-thumb">
+            {% if model.image %}
+            <img src="{{ model.image.thumbnail_128.url }}" alt="">
+            {% else %}
+            <i class="fas fa-box"></i>
+            {% endif %}
+        </span>
         <a href="{{ model.urls.view }}" class="tag">
             {{ model.name }}
         </a>

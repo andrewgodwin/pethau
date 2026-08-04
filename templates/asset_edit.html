@@ -3,7 +3,7 @@
 {% block title %}Edit {{ object }}{% endblock title %}
 
 {% block content %}
-<form method="post" class="pure-form pure-form-aligned asset-form context-box">
+<form method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned asset-form context-box">
     <h1>Edit {{ object }}</h1>
 
     {% csrf_token %}
@@ -32,6 +32,7 @@
         {% include "_field.html" with field=form.notes %}
         {% include "_field.html" with field=form.serial %}
     </fieldset>
+    {% include "_image_field.html" %}
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">Save</button>
         <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>

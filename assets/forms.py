@@ -1,9 +1,34 @@
 from django import forms
 
-from assets.models import Asset, AssetHistory, Model, Owner
+from assets.models import Asset, AssetHistory, Image, Model, Owner
 
 
-class CreateAssetForm(forms.ModelForm):
+class SingleImageMixin:
+    """
+    Adds a single optional image upload field to a ModelForm for a model with an `image`
+    FK to `Image`, plus a way to remove the current image when editing an instance that
+    already has one.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["image_file"] = forms.ImageField(required=False, label="Image")
+        if self.instance.pk and self.instance.image_id:
+            self.fields["remove_image"] = forms.BooleanField(
+                required=False, label="Remove current image"
+            )
+
+    def save_image(self, instance):
+        uploaded = self.cleaned_data.get("image_file")
+        if uploaded:
+            instance.image = Image.objects.create(image=uploaded)
+            instance.save(update_fields=["image"])
+        elif self.cleaned_data.get("remove_image"):
+            instance.image = None
+            instance.save(update_fields=["image"])
+
+
+class CreateAssetForm(SingleImageMixin, forms.ModelForm):
     """
     Form for creating a new asset.
     """
@@ -34,7 +59,7 @@ class CreateAssetForm(forms.ModelForm):
             self.fields["tag"].initial = Asset.next_tag()
 
 
-class EditAssetForm(forms.ModelForm):
+class EditAssetForm(SingleImageMixin, forms.ModelForm):
     """
     Form for editing an existing asset.
     """
@@ -84,7 +109,7 @@ class AssetAuditForm(forms.ModelForm):
         self.fields["location"].queryset = location_queryset
 
 
-class ModelForm(forms.ModelForm):
+class ModelForm(SingleImageMixin, forms.ModelForm):
     """
     Form for creating/editing a model.
     """

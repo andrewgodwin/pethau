@@ -36,4 +36,12 @@
     </div>
 </div>
 
+{% if model.image %}
+<div class="image-gallery">
+    <a href="{{ model.image.image.url }}" class="image-thumb">
+        <img src="{{ model.image.thumbnail_128.url }}" alt="{{ model.image.title|default:'' }}">
+    </a>
+</div>
+{% endif %}
+
 {% endblock content %}

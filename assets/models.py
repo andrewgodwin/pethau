@@ -57,7 +57,13 @@ class Model(models.Model):
     manufacturer = models.CharField(max_length=255, blank=True, null=True)
     short_name = models.CharField(max_length=255, blank=True, null=True, unique=True)
 
-    images = models.ManyToManyField(Image, blank=True, related_name="models")
+    image = models.ForeignKey(
+        Image,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="models",
+    )
     attachments = models.ManyToManyField(Attachment, blank=True, related_name="models")
 
     created = models.DateTimeField(auto_now_add=True)
@@ -116,7 +122,13 @@ class Asset(models.Model):
     description = models.TextField(blank=True, null=True)
     deleted = models.DateTimeField(blank=True, null=True)
 
-    images = models.ManyToManyField(Image, blank=True, related_name="assets")
+    image = models.ForeignKey(
+        Image,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="assets",
+    )
     attachments = models.ManyToManyField(Attachment, blank=True, related_name="assets")
 
     owner = models.ForeignKey(

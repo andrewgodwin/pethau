@@ -19,7 +19,9 @@ class ModelListView(ListView):
     paginate_by = 100
 
     def get_queryset(self):
-        queryset = Model.objects.order_by("manufacturer", "name")
+        queryset = Model.objects.select_related("image").order_by(
+            "manufacturer", "name"
+        )
         query = self.request.GET.get("q", "").strip()
         if query:
             queryset = queryset.filter(
@@ -46,11 +48,21 @@ class ModelCreateView(CreateView):
     form_class = ModelForm
     template_name = "model_form.html"
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        form.save_image(self.object)
+        return response
+
 
 class ModelUpdateView(UpdateView):
     model = Model
     form_class = ModelForm
     template_name = "model_form.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        form.save_image(self.object)
+        return response
 
 
 class ModelDeleteView(DeleteView):

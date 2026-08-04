@@ -28,7 +28,7 @@ class ModelAdmin(admin.ModelAdmin):
     list_display = ["name", "manufacturer", "short_name", "created"]
     list_filter = ["manufacturer"]
     search_fields = ["name", "manufacturer", "short_name"]
-    filter_horizontal = ["images", "attachments"]
+    filter_horizontal = ["attachments"]
 
 
 class AssetHistoryInline(admin.TabularInline):
@@ -55,5 +55,5 @@ class AssetAdmin(admin.ModelAdmin):
     list_display = ["tag", "name", "model", "owner", "created"]
     list_filter = ["model", "owner"]
     search_fields = ["tag", "name", "serial", "description", "notes"]
-    filter_horizontal = ["images", "attachments"]
+    filter_horizontal = ["attachments"]
     inlines = [AssetIdentifierInline, AssetHistoryInline]

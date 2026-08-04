@@ -1,0 +1,12 @@
+<fieldset>
+    <legend>Image</legend>
+    {% if object.image %}
+    <div class="image-gallery">
+        <div class="image-thumb">
+            <img src="{{ object.image.thumbnail_128.url }}" alt="{{ object.image.title|default:'' }}">
+        </div>
+    </div>
+    {% include "_field.html" with field=form.remove_image %}
+    {% endif %}
+    {% include "_field.html" with field=form.image_file %}
+</fieldset>

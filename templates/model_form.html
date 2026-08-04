@@ -3,7 +3,7 @@
 {% block title %}{% if object %}Edit {{ object }}{% else %}New Model{% endif %}{% endblock title %}
 
 {% block content %}
-<form method="post" class="pure-form pure-form-aligned model-form context-box">
+<form method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned model-form context-box">
     <h1>{% if object %}Edit {{ object }}{% else %}New Model{% endif %}</h1>
 
     {% csrf_token %}
@@ -21,6 +21,7 @@
         {% include "_field.html" with field=form.manufacturer %}
         {% include "_field.html" with field=form.short_name %}
     </fieldset>
+    {% include "_image_field.html" %}
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">{% if object %}Save{% else %}Create{% endif %}</button>
         <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>

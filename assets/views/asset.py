@@ -27,6 +27,7 @@ class AssetCreateView(FormView):
 
     def form_valid(self, form):
         asset = form.save()
+        form.save_image(asset)
         history = AssetHistory.objects.create(
             asset=asset,
             status="active",
@@ -46,7 +47,7 @@ class AssetListView(ListView):
     def get_queryset(self):
         queryset = (
             Asset.objects.filter(deleted__isnull=True)
-            .select_related("current_history")
+            .select_related("current_history", "image")
             .order_by("tag")
         )
         query = self.request.GET.get("q", "").strip()
@@ -72,6 +73,11 @@ class AssetUpdateView(UpdateView):
     model = Asset
     form_class = EditAssetForm
     template_name = "asset_edit.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        form.save_image(self.object)
+        return response
 
 
 class AssetAuditView(CreateView):

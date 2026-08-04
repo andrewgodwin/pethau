@@ -52,4 +52,12 @@
     {% endif %}
 </div>
 
+{% if asset.image %}
+<div class="image-gallery">
+    <a href="{{ asset.image.image.url }}" class="image-thumb">
+        <img src="{{ asset.image.thumbnail_128.url }}" alt="{{ asset.image.title|default:'' }}">
+    </a>
+</div>
+{% endif %}
+
 {% endblock content %}
