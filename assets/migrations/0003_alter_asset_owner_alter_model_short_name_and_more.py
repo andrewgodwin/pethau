@@ -7,22 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('assets', '0002_owner_asset_owner'),
+        ("assets", "0002_owner_asset_owner"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='asset',
-            name='owner',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='assets', to='assets.owner'),
+            model_name="asset",
+            name="owner",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="assets",
+                to="assets.owner",
+            ),
         ),
         migrations.AlterField(
-            model_name='model',
-            name='short_name',
+            model_name="model",
+            name="short_name",
             field=models.CharField(blank=True, max_length=255, null=True, unique=True),
         ),
         migrations.AddConstraint(
-            model_name='model',
-            constraint=models.UniqueConstraint(fields=('name', 'manufacturer'), name='unique_model_name_manufacturer'),
+            model_name="model",
+            constraint=models.UniqueConstraint(
+                fields=("name", "manufacturer"), name="unique_model_name_manufacturer"
+            ),
         ),
     ]

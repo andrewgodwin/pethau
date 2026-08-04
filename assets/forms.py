@@ -4,7 +4,9 @@ from assets.models import Asset, Model, Owner
 
 
 class CreateAssetForm(forms.ModelForm):
-    """Form for creating a new asset."""
+    """
+    Form for creating a new asset.
+    """
 
     class Meta:
         model = Asset
@@ -24,7 +26,9 @@ class CreateAssetForm(forms.ModelForm):
 
 
 class ModelForm(forms.ModelForm):
-    """Form for creating/editing a model."""
+    """
+    Form for creating/editing a model.
+    """
 
     class Meta:
         model = Model

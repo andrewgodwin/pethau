@@ -31,9 +31,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     A single user, identified by their email address.
 
-    The email address is built in and used to log in; other ways of
-    logging in (OIDC accounts, and in future SAML/LDAP) live in the
-    Identity model, and a User can have many.
+    The email address is built in and used to log in; other ways of logging in (OIDC
+    accounts, and in future SAML/LDAP) live in the Identity model, and a User can have
+    many.
     """
 
     email = models.EmailField(unique=True)

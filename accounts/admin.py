@@ -7,7 +7,7 @@ from .models import User
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     """
-    Admin for the custom User model
+    Admin for the custom User model.
     """
 
     list_display = ["email", "name", "is_active", "is_staff", "created"]

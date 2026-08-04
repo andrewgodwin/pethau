@@ -5,94 +5,192 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies: list[tuple[str, str]] = []
 
     operations = [
         migrations.CreateModel(
-            name='Asset',
+            name="Asset",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tag', models.CharField(max_length=255, unique=True)),
-                ('name', models.CharField(blank=True, max_length=255, null=True)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('serial', models.CharField(blank=True, max_length=255, null=True)),
-                ('notes', models.TextField(blank=True, null=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tag", models.CharField(max_length=255, unique=True)),
+                ("name", models.CharField(blank=True, max_length=255, null=True)),
+                ("description", models.TextField(blank=True, null=True)),
+                ("serial", models.CharField(blank=True, max_length=255, null=True)),
+                ("notes", models.TextField(blank=True, null=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Attachment',
+            name="Attachment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to='asset_attachments/')),
-                ('title', models.CharField(blank=True, max_length=255, null=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("file", models.FileField(upload_to="asset_attachments/")),
+                ("title", models.CharField(blank=True, max_length=255, null=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='asset_images/')),
-                ('title', models.CharField(blank=True, max_length=255, null=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("image", models.ImageField(upload_to="asset_images/")),
+                ("title", models.CharField(blank=True, max_length=255, null=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='AssetHistory',
+            name="AssetHistory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('when', models.DateTimeField(auto_now_add=True)),
-                ('status', models.CharField(blank=True, choices=[('missing', 'Missing'), ('destroyed', 'Destroyed'), ('needs_repair', 'Needs Repair'), ('archived', 'Archived'), ('active', 'Active')], max_length=255, null=True)),
-                ('location', models.CharField(blank=True, max_length=255, null=True)),
-                ('notes', models.TextField(blank=True, null=True)),
-                ('asset', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='histories', to='assets.asset')),
-                ('attachments', models.ManyToManyField(blank=True, related_name='asset_histories', to='assets.attachment')),
-                ('images', models.ManyToManyField(blank=True, related_name='asset_histories', to='assets.image')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("when", models.DateTimeField(auto_now_add=True)),
+                (
+                    "status",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("missing", "Missing"),
+                            ("destroyed", "Destroyed"),
+                            ("needs_repair", "Needs Repair"),
+                            ("archived", "Archived"),
+                            ("active", "Active"),
+                        ],
+                        max_length=255,
+                        null=True,
+                    ),
+                ),
+                ("location", models.CharField(blank=True, max_length=255, null=True)),
+                ("notes", models.TextField(blank=True, null=True)),
+                (
+                    "asset",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="histories",
+                        to="assets.asset",
+                    ),
+                ),
+                (
+                    "attachments",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="asset_histories",
+                        to="assets.attachment",
+                    ),
+                ),
+                (
+                    "images",
+                    models.ManyToManyField(
+                        blank=True, related_name="asset_histories", to="assets.image"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Asset History',
-                'verbose_name_plural': 'Asset Histories',
+                "verbose_name": "Asset History",
+                "verbose_name_plural": "Asset Histories",
             },
         ),
         migrations.AddField(
-            model_name='asset',
-            name='current_history',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='current_link', to='assets.assethistory'),
+            model_name="asset",
+            name="current_history",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="current_link",
+                to="assets.assethistory",
+            ),
         ),
         migrations.AddField(
-            model_name='asset',
-            name='attachments',
-            field=models.ManyToManyField(blank=True, related_name='assets', to='assets.attachment'),
+            model_name="asset",
+            name="attachments",
+            field=models.ManyToManyField(
+                blank=True, related_name="assets", to="assets.attachment"
+            ),
         ),
         migrations.AddField(
-            model_name='asset',
-            name='images',
-            field=models.ManyToManyField(blank=True, related_name='assets', to='assets.image'),
+            model_name="asset",
+            name="images",
+            field=models.ManyToManyField(
+                blank=True, related_name="assets", to="assets.image"
+            ),
         ),
         migrations.CreateModel(
-            name='Model',
+            name="Model",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('manufacturer', models.CharField(blank=True, max_length=255, null=True)),
-                ('short_name', models.CharField(blank=True, max_length=255, null=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('attachments', models.ManyToManyField(blank=True, related_name='models', to='assets.attachment')),
-                ('images', models.ManyToManyField(blank=True, related_name='models', to='assets.image')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "manufacturer",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                ("short_name", models.CharField(blank=True, max_length=255, null=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                (
+                    "attachments",
+                    models.ManyToManyField(
+                        blank=True, related_name="models", to="assets.attachment"
+                    ),
+                ),
+                (
+                    "images",
+                    models.ManyToManyField(
+                        blank=True, related_name="models", to="assets.image"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='asset',
-            name='model',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='assets', to='assets.model'),
+            model_name="asset",
+            name="model",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="assets",
+                to="assets.model",
+            ),
         ),
     ]

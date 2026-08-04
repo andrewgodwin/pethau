@@ -34,7 +34,9 @@ class Image(models.Model):
 
 
 class Attachment(models.Model):
-    """A file attachment such as a manual."""
+    """
+    A file attachment such as a manual.
+    """
 
     file = models.FileField(upload_to="asset_attachments/")
     title = models.CharField(max_length=255, blank=True, null=True)
@@ -47,7 +49,9 @@ class Attachment(models.Model):
 
 
 class Model(models.Model):
-    """A model that an asset can be."""
+    """
+    A model that an asset can be.
+    """
 
     name = models.CharField(max_length=255)
     manufacturer = models.CharField(max_length=255, blank=True, null=True)
@@ -88,7 +92,9 @@ class Model(models.Model):
 
 
 class Owner(models.Model):
-    """An owner of an asset."""
+    """
+    An owner of an asset.
+    """
 
     name = models.CharField(max_length=255)
     notes = models.TextField(blank=True, null=True)
@@ -101,7 +107,9 @@ class Owner(models.Model):
 
 
 class Asset(models.Model):
-    """A thing, with a unique identifier."""
+    """
+    A thing, with a unique identifier.
+    """
 
     tag = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -162,7 +170,9 @@ class Asset(models.Model):
 
 
 class AssetHistory(models.Model):
-    """Tracks an asset's current checked-in/out status as well as audits"""
+    """
+    Tracks an asset's current checked-in/out status as well as audits.
+    """
 
     STATUS_CHOICES: ClassVar[list[tuple[str, str]]] = [
         ("missing", "Missing"),
@@ -175,11 +185,15 @@ class AssetHistory(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="histories")
     when = models.DateTimeField(auto_now_add=True)
 
-    status = models.CharField(max_length=255, blank=True, null=True, choices=STATUS_CHOICES)
+    status = models.CharField(
+        max_length=255, blank=True, null=True, choices=STATUS_CHOICES
+    )
     location = models.CharField(max_length=255, blank=True, null=True)
 
     images = models.ManyToManyField(Image, blank=True, related_name="asset_histories")
-    attachments = models.ManyToManyField(Attachment, blank=True, related_name="asset_histories")
+    attachments = models.ManyToManyField(
+        Attachment, blank=True, related_name="asset_histories"
+    )
     notes = models.TextField(blank=True, null=True)
 
     class Meta:

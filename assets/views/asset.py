@@ -6,7 +6,9 @@ from assets.models import Asset, AssetHistory
 
 
 class AssetCreateView(FormView):
-    """Create a new asset and its initial history entry."""
+    """
+    Create a new asset and its initial history entry.
+    """
 
     template_name = "asset_create.html"
     form_class = CreateAssetForm
