@@ -38,13 +38,13 @@
     </div>
     {% for asset in assets %}
     <div class="item-entry">
-        <span class="item-thumb">
+        <a href="{{ asset.urls.view }}" class="item-thumb">
             {% if asset.image %}
             <img src="{{ asset.image.thumbnail_128.url }}" alt="">
             {% else %}
             <i class="fas fa-box"></i>
             {% endif %}
-        </span>
+        </a>
         <a href="{{ asset.urls.view }}" class="tag">
             {{ asset.tag }}
             <span class="name">{{ asset.name }}</span>

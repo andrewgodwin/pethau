@@ -40,13 +40,13 @@
     </div>
     {% for model in models %}
     <div class="item-entry {% cycle 'odd' 'even' %}">
-        <span class="item-thumb">
+        <a href="{{ model.urls.view }}" class="item-thumb">
             {% if model.image %}
             <img src="{{ model.image.thumbnail_128.url }}" alt="">
             {% else %}
             <i class="fas fa-box"></i>
             {% endif %}
-        </span>
+        </a>
         <a href="{{ model.urls.view }}" class="tag">
             {{ model.name }}
         </a>
