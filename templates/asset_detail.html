@@ -8,8 +8,9 @@
 {% if asset.name %}<h2 class="subtitle">{{ asset.name }}</h2>{% endif %}
 
 <div class="actions">
-    <a href="{{ asset.urls.edit }}" class="btn">Edit</a>
-    <a href="{{ asset.urls.delete }}" class="btn">Delete</a>
+    <span class="spacer"></span>
+    <a href="{{ asset.urls.edit }}" class="edit"><i class="fas fa-edit"></i> Edit</a>
+    <a href="{{ asset.urls.delete }}" class="delete"><i class="fas fa-trash"></i> Delete</a>
 </div>
 
 <div class="properties pure-g">

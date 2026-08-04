@@ -18,7 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from assets.views.asset import AssetCreateView, AssetDetailView, AssetListView
+from assets.views.asset import (
+    AssetCreateView,
+    AssetDeleteView,
+    AssetDetailView,
+    AssetListView,
+    AssetUpdateView,
+)
 from assets.views.model import (
     ModelCreateView,
     ModelDeleteView,
@@ -32,6 +38,8 @@ urlpatterns = [
     path("assets/", AssetListView.as_view(), name="asset-list-alt"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
+    path("assets/<int:pk>/edit/", AssetUpdateView.as_view(), name="asset-edit"),
+    path("assets/<int:pk>/delete/", AssetDeleteView.as_view(), name="asset-delete"),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),
     path("models/<int:pk>/", ModelDetailView.as_view(), name="model-detail"),

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ object }}{% endblock title %}
+
+{% block content %}
+<form method="post" class="pure-form pure-form-aligned asset-form context-box">
+    <h1>Edit {{ object }}</h1>
+
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <fieldset>
+        {% include "_field.html" with field=form.tag %}
+        {% include "_field.html" with field=form.owner %}
+        {% include "_field.html" with field=form.model %}
+    </fieldset>
+    <fieldset>
+        <legend>Info</legend>
+        {% include "_field.html" with field=form.name %}
+        {% include "_field.html" with field=form.description %}
+    </fieldset>
+    <fieldset>
+        <legend>Extra</legend>
+        {% include "_field.html" with field=form.serial %}
+        {% include "_field.html" with field=form.notes %}
+    </fieldset>
+    <div class="footer">
+        <button type="submit" class="pure-button pure-button-primary">Save</button>
+        <a class="pure-button cancel" href="{{ object.urls.view }}">Cancel</a>
+    </div>
+</form>
+{% endblock content %}

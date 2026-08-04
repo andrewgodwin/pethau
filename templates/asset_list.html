@@ -1,13 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="actions">
-    <input type="text" placeholder="Search..." />
-    <button class="search-btn" type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+<form class="actions" method="get">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search..." autocomplete="off" />
+    <button class="clear-btn" type="button" aria-label="Clear search" {% if not query %}hidden{% endif %}>
+        <i class="fas fa-xmark"></i>
+    </button>
+    <button class="search-btn" type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
     <span class="spacer"></span>
-    <a href="#"><i class="fas fa-refresh"></i></a>
+    <a href="{% url 'asset-list' %}"><i class="fas fa-refresh"></i></a>
     <a class="main" href="{% url 'asset-create' %}">New</a>
-</div>
+</form>
+<script>
+    (function () {
+        var form = document.currentScript.previousElementSibling;
+        var input = form.querySelector("input[name='q']");
+        var clearBtn = form.querySelector(".clear-btn");
+
+        input.addEventListener("input", function () {
+            clearBtn.hidden = input.value.length === 0;
+        });
+        clearBtn.addEventListener("click", function () {
+            input.value = "";
+            clearBtn.hidden = true;
+            input.form.submit();
+        });
+    })();
+</script>
 
 <div class="item-list">
     <div class="item-header">
@@ -42,6 +61,13 @@
         </span>
     </div>
     {% endfor %}
+    {% if not assets %}
+    <div class="item-entry empty-list">
+        <span class="empty-value">No assets found.</span>
+    </div>
+    {% endif %}
 </div>
+
+{% include "_pagination.html" %}
 
 {% endblock content %}

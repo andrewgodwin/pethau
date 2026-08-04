@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ object }}{% endblock title %}
+
+{% block content %}
+<form method="post" class="pure-form pure-form-aligned asset-form context-box">
+    <h1>Delete {{ object }}</h1>
+
+    {% csrf_token %}
+
+    <div class="box-content">
+        <p>Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+    </div>
+
+    <div class="footer">
+        <button type="submit" class="pure-button delete">Delete</button>
+        <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>
+    </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% if is_paginated %}
+<div class="actions pagination">
+    <span class="spacer"></span>
+    {% if page_obj.has_previous %}
+    <a href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left"></i></a>
+    {% else %}
+    <a class="disabled"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+    <span class="pagination-status">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}"><i class="fas fa-chevron-right"></i></a>
+    {% else %}
+    <a class="disabled"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+    <span class="spacer"></span>
+</div>
+{% endif %}
