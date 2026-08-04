@@ -19,11 +19,23 @@ from django.contrib import admin
 from django.urls import path
 
 from assets.views.asset import AssetCreateView, AssetDetailView, AssetListView
+from assets.views.model import (
+    ModelCreateView,
+    ModelDeleteView,
+    ModelDetailView,
+    ModelListView,
+    ModelUpdateView,
+)
 
 urlpatterns = [
     path("", AssetListView.as_view(), name="asset-list"),
-    path("assets/", AssetListView.as_view(), name="asset-create"),
+    path("assets/", AssetListView.as_view(), name="asset-list-alt"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
+    path("models/", ModelListView.as_view(), name="model-list"),
+    path("models/new/", ModelCreateView.as_view(), name="model-create"),
+    path("models/<int:pk>/", ModelDetailView.as_view(), name="model-detail"),
+    path("models/<int:pk>/edit/", ModelUpdateView.as_view(), name="model-edit"),
+    path("models/<int:pk>/delete/", ModelDeleteView.as_view(), name="model-delete"),
     path("admin/", admin.site.urls),
 ]

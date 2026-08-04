@@ -21,3 +21,15 @@ class CreateAssetForm(forms.ModelForm):
         self.fields["tag"].widget.attrs.update({"autofocus": True})
         if not self.is_bound and not self.instance.pk:
             self.fields["tag"].initial = Asset.next_tag()
+
+
+class ModelForm(forms.ModelForm):
+    """Form for creating/editing a model."""
+
+    class Meta:
+        model = Model
+        fields = ["name", "manufacturer", "short_name"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name"].widget.attrs.update({"autofocus": True})

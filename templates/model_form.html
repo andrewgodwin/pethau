@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit {{ object }}{% else %}New Model{% endif %}{% endblock title %}
+
+{% block content %}
+<form method="post" class="pure-form pure-form-aligned model-form context-box">
+    <h1>{% if object %}Edit {{ object }}{% else %}New Model{% endif %}</h1>
+
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <fieldset>
+        {% include "_field.html" with field=form.name %}
+        {% include "_field.html" with field=form.manufacturer %}
+        {% include "_field.html" with field=form.short_name %}
+    </fieldset>
+    <div class="footer">
+        <button type="submit" class="pure-button pure-button-primary">{% if object %}Save{% else %}Create{% endif %}</button>
+        <a class="pure-button cancel" href="{% url 'model-list' %}">Cancel</a>
+    </div>
+</form>
+{% endblock content %}

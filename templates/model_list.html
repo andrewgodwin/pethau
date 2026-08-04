@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Models{% endblock title %}
+
+{% block content %}
+<div class="actions">
+    <input type="text" placeholder="Search..." />
+    <button class="search-btn" type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+    <span class="spacer"></span>
+    <a href="#"><i class="fas fa-refresh"></i></a>
+    <a class="main" href="{% url 'model-create' %}">New</a>
+</div>
+
+<div class="item-list">
+    <div class="item-header">
+        <span class="tag">Name</span>
+        <span class="col2">Manufacturer</span>
+        <span class="col3">Short Name</span>
+        <span class="item-actions">Actions</span>
+    </div>
+    {% for model in models %}
+    <div class="item-entry {% cycle 'odd' 'even' %}">
+        <a href="{{ model.urls.view }}" class="tag">
+            {{ model.name }}
+        </a>
+        <span class="col2">
+            {% if model.manufacturer %}
+                {{ model.manufacturer }}
+            {% else %}
+                <span class="empty-value">(unknown)</span>
+            {% endif %}
+        </span>
+        <span class="col3">
+            {% if model.short_name %}
+                {{ model.short_name }}
+            {% else %}
+                <span class="empty-value">(none)</span>
+            {% endif %}
+        </span>
+        <span class="item-actions">
+            <a href="{{ model.urls.edit }}"><i class="fas fa-edit"></i></a>
+            <a href="{{ model.urls.delete }}" class="delete"><i class="fas fa-trash"></i></a>
+        </span>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

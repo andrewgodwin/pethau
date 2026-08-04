@@ -59,6 +59,15 @@ class Model(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class urls(urlman.Urls):
+        list = "/models/"
+        view = "/models/{self.id}/"
+        edit = "{view}edit/"
+        delete = "{view}delete/"
+
+    def get_absolute_url(self):
+        return self.urls.view
+
     def display_name(self):
         if self.short_name:
             return self.short_name
@@ -115,6 +124,7 @@ class Asset(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class urls(urlman.Urls):
+        list = "/assets/"
         view = "/assets/{self.id}/"
         edit = "{view}edit/"
         delete = "{view}delete/"
@@ -123,6 +133,9 @@ class Asset(models.Model):
         if self.name:
             return f"{self.tag} ({self.name})"
         return self.tag
+
+    def get_absolute_url(self):
+        return self.urls.view
 
     @classmethod
     def next_tag(cls) -> str:
