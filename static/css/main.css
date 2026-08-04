@@ -394,8 +394,6 @@ h2.subtitle {
     flex-grow: 2;
 }
 
-.item-header .location,
-.item-header .status,
 .item-header .col2,
 .item-header .col3 {
     width: 10rem;
@@ -432,8 +430,6 @@ h2.subtitle {
     margin: -0.2rem 0 0 0;
 }
 
-.item-entry .location,
-.item-entry .status,
 .item-entry .col2,
 .item-entry .col3 {
     width: 10rem;

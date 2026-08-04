@@ -31,8 +31,8 @@
 <div class="item-list">
     <div class="item-header">
         <span class="tag">Tag / Name</span>
-        <span class="status">Status</span>
-        <span class="location">Location</span>
+        <span class="col2">Status</span>
+        <span class="col3">Location</span>
         <span class="item-actions">Actions</span>
     </div>
     {% for asset in assets %}
@@ -41,14 +41,14 @@
             {{ asset.tag }}
             <span class="name">{{ asset.name }}</span>
         </a>
-        <span class="status">
+        <span class="col2">
             {% if asset.status %}
                 {{ asset.status }}
             {% else %}
                 <span class="empty-value">(unknown)</span>
             {% endif %}
         </span>
-        <span class="location">
+        <span class="col3">
             {% if asset.location %}
                 {{ asset.location }}
             {% else %}

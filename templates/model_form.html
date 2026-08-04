@@ -23,7 +23,7 @@
     </fieldset>
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">{% if object %}Save{% else %}Create{% endif %}</button>
-        <a class="pure-button cancel" href="{% url 'model-list' %}">Cancel</a>
+        <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>
     </div>
 </form>
 {% endblock content %}
