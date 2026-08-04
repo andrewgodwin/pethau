@@ -33,3 +33,6 @@ class ModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["name"].widget.attrs.update({"autofocus": True})
+        # Ensure empty values are treated as None (for uniqueness)
+        self.fields["manufacturer"].empty_value = None
+        self.fields["short_name"].empty_value = None

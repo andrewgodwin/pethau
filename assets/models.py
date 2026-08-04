@@ -51,13 +51,21 @@ class Model(models.Model):
 
     name = models.CharField(max_length=255)
     manufacturer = models.CharField(max_length=255, blank=True, null=True)
-    short_name = models.CharField(max_length=255, blank=True, null=True)
+    short_name = models.CharField(max_length=255, blank=True, null=True, unique=True)
 
     images = models.ManyToManyField(Image, blank=True, related_name="models")
     attachments = models.ManyToManyField(Attachment, blank=True, related_name="models")
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["name", "manufacturer"],
+                name="unique_model_name_manufacturer",
+            ),
+        ]
 
     class urls(urlman.Urls):
         list = "/models/"
