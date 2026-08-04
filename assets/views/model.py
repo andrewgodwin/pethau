@@ -1,5 +1,12 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from assets.forms import ModelForm
 from assets.models import Model
@@ -9,7 +16,23 @@ class ModelListView(ListView):
     model = Model
     template_name = "model_list.html"
     context_object_name = "models"
-    queryset = Model.objects.order_by("manufacturer", "name")
+    paginate_by = 100
+
+    def get_queryset(self):
+        queryset = Model.objects.order_by("manufacturer", "name")
+        query = self.request.GET.get("q", "").strip()
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query)
+                | Q(manufacturer__icontains=query)
+                | Q(short_name__icontains=query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.request.GET.get("q", "")
+        return context
 
 
 class ModelDetailView(DetailView):

@@ -214,6 +214,10 @@ small screens.
     cursor: pointer;
 }
 
+.actions button[hidden] {
+    display: none;
+}
+
 .actions a.delete {
     background: var(--delete-color);
     color: var(--delete-color-text);
@@ -240,6 +244,17 @@ small screens.
 
 .actions a.main:hover {
     background: var(--highlight-color-hover);
+}
+
+.actions.pagination a.disabled {
+    opacity: 40%;
+    cursor: default;
+    pointer-events: none;
+}
+
+.actions .pagination-status {
+    color: var(--content-bar-text);
+    opacity: 80%;
 }
 
 /* --- Context Boxes --- */
@@ -442,6 +457,10 @@ h2.subtitle {
 
 .item-entry .item-actions a:hover {
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
+}
+
+.item-entry.empty-list {
+    justify-content: center;
 }
 
 .properties {

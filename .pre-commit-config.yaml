@@ -30,6 +30,7 @@ repos:
     rev: 26.5.1
     hooks:
       - id: black
+        args: [--target-version=py313]
 
   - repo: https://github.com/pycqa/isort
     rev: 8.0.1
