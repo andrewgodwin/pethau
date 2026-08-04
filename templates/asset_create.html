@@ -28,8 +28,9 @@
     </fieldset>
     <fieldset>
         <legend>Extra</legend>
-        {% include "_field.html" with field=form.serial %}
+        {% include "_field.html" with field=form.category %}
         {% include "_field.html" with field=form.notes %}
+        {% include "_field.html" with field=form.serial %}
     </fieldset>
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">Create</button>

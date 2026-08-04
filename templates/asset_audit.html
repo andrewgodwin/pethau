@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Audit {{ asset }}{% endblock title %}
+
+{% block content %}
+<form method="post" class="pure-form pure-form-aligned asset-form context-box">
+    <h1>Audit {{ asset }}</h1>
+
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <fieldset>
+        {% include "_field.html" with field=form.status %}
+        {% include "_field.html" with field=form.location %}
+        {% include "_field.html" with field=form.notes %}
+    </fieldset>
+    <div class="footer">
+        <button type="submit" class="pure-button pure-button-primary">Save Audit</button>
+        <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>
+    </div>
+</form>
+{% endblock content %}

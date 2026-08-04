@@ -1,6 +1,14 @@
 from django.contrib import admin
 
-from .models import Asset, AssetHistory, Attachment, Image, Model, Owner
+from .models import (
+    Asset,
+    AssetHistory,
+    AssetIdentifier,
+    Attachment,
+    Image,
+    Model,
+    Owner,
+)
 
 
 @admin.register(Image)
@@ -25,9 +33,15 @@ class ModelAdmin(admin.ModelAdmin):
 
 class AssetHistoryInline(admin.TabularInline):
     model = AssetHistory
+    fk_name = "asset"
     extra = 0
     filter_horizontal = ["images", "attachments"]
     ordering = ["-when"]
+
+
+class AssetIdentifierInline(admin.TabularInline):
+    model = AssetIdentifier
+    extra = 0
 
 
 @admin.register(Owner)
@@ -38,8 +52,8 @@ class OwnerAdmin(admin.ModelAdmin):
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
-    list_display = ["tag", "name", "model", "serial", "owner", "created"]
+    list_display = ["tag", "name", "model", "owner", "created"]
     list_filter = ["model", "owner"]
     search_fields = ["tag", "name", "serial", "description", "notes"]
     filter_horizontal = ["images", "attachments"]
-    inlines = [AssetHistoryInline]
+    inlines = [AssetIdentifierInline, AssetHistoryInline]

@@ -134,8 +134,11 @@ class Asset(models.Model):
     )
 
     model = models.ForeignKey(Model, on_delete=models.PROTECT, related_name="assets")
+
     serial = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+
+    category = models.CharField(max_length=255, blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -144,6 +147,7 @@ class Asset(models.Model):
         list = "/assets/"
         view = "/assets/{self.id}/"
         edit = "{view}edit/"
+        audit = "{view}audit/"
         delete = "{view}delete/"
 
     def __str__(self):
@@ -170,6 +174,36 @@ class Asset(models.Model):
         raise ValueError("Failed to generate unique tag")
 
 
+class AssetIdentifier(models.Model):
+    """
+    An external identifier attached to an asset, such as an RFID tag.
+    """
+
+    KIND_CHOICES: ClassVar[list[tuple[str, str]]] = [
+        ("rfid_uhf", "RFID (UHF)"),
+    ]
+
+    asset = models.ForeignKey(
+        Asset, on_delete=models.CASCADE, related_name="identifiers"
+    )
+    kind = models.CharField(max_length=255, choices=KIND_CHOICES)
+    value = models.CharField(max_length=255)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["kind", "value"],
+                name="unique_assetidentifier_kind_value",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.get_kind_display()}: {self.value}"
+
+
 class AssetHistory(models.Model):
     """
     Tracks an asset's current checked-in/out status as well as audits.
@@ -189,7 +223,13 @@ class AssetHistory(models.Model):
     status = models.CharField(
         max_length=255, blank=True, null=True, choices=STATUS_CHOICES
     )
-    location = models.CharField(max_length=255, blank=True, null=True)
+    location = models.ForeignKey(
+        Asset,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="located_items",
+    )
 
     images = models.ManyToManyField(Image, blank=True, related_name="asset_histories")
     attachments = models.ManyToManyField(

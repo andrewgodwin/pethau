@@ -20,6 +20,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 
 from assets.views.asset import (
+    AssetAuditView,
     AssetCreateView,
     AssetDeleteView,
     AssetDetailView,
@@ -40,6 +41,7 @@ urlpatterns = [
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
     path("assets/<int:pk>/edit/", AssetUpdateView.as_view(), name="asset-edit"),
+    path("assets/<int:pk>/audit/", AssetAuditView.as_view(), name="asset-audit"),
     path("assets/<int:pk>/delete/", AssetDeleteView.as_view(), name="asset-delete"),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),

@@ -9,6 +9,7 @@
 
 <div class="actions">
     <span class="spacer"></span>
+    <a href="{{ asset.urls.audit }}" class="audit"><i class="fas fa-clipboard-check"></i> Audit</a>
     <a href="{{ asset.urls.edit }}" class="edit"><i class="fas fa-edit"></i> Edit</a>
     <a href="{{ asset.urls.delete }}" class="delete"><i class="fas fa-trash"></i> Delete</a>
 </div>
@@ -19,8 +20,8 @@
 
     <div class="title pure-u-1 pure-u-md-1-3">Status</div>
     <div class="value pure-u-1 pure-u-md-2-3">
-        {% if asset.status %}
-            {{ asset.status }}
+        {% if asset.current_history.status %}
+            {{ asset.current_history.get_status_display }}
         {% else %}
             <span class="empty-value">(none)</span>
         {% endif %}
@@ -28,8 +29,8 @@
 
     <div class="title pure-u-1 pure-u-md-1-3">Location</div>
     <div class="value pure-u-1 pure-u-md-2-3">
-        {% if asset.location %}
-            {{ asset.location }}
+        {% if asset.current_history.location %}
+            <a href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location }}</a>
         {% else %}
             <span class="empty-value">(none)</span>
         {% endif %}
