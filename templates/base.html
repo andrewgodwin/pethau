@@ -25,16 +25,20 @@
 
             <div id="menu">
                 <div class="pure-menu">
-                    <a class="pure-menu-heading" href="#company">Pethau</a>
+                    <a class="pure-menu-heading" href="/">Pethau</a>
 
                     <ul class="pure-menu-list">
                         <li class="pure-menu-item">
-                            <a href="/assets/" class="pure-menu-link pure-menu-selected"
+                            <a
+                                href="/assets/"
+                                class="pure-menu-link {% if request.resolver_match.url_name|slice:':5' == 'asset' %}pure-menu-selected{% endif %}"
                                 ><i class="fa-solid fa-boxes-stacked fa-width-fixed"></i> Assets</a
                             >
                         </li>
                         <li class="pure-menu-item">
-                            <a href="{% url 'model-list' %}" class="pure-menu-link"
+                            <a
+                                href="{% url 'model-list' %}"
+                                class="pure-menu-link {% if request.resolver_match.url_name|slice:':5' == 'model' %}pure-menu-selected{% endif %}"
                                 ><i class="fa-solid fa-border-top-left fa-width-fixed"></i> Models</a
                             >
                         </li>

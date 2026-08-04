@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import RedirectView
 
 from assets.views.asset import (
     AssetCreateView,
@@ -34,8 +35,8 @@ from assets.views.model import (
 )
 
 urlpatterns = [
-    path("", AssetListView.as_view(), name="asset-list"),
-    path("assets/", AssetListView.as_view(), name="asset-list-alt"),
+    path("", RedirectView.as_view(pattern_name="asset-list", permanent=False)),
+    path("assets/", AssetListView.as_view(), name="asset-list"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
     path("assets/<int:pk>/edit/", AssetUpdateView.as_view(), name="asset-edit"),
