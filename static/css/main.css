@@ -301,6 +301,27 @@ small screens.
     margin-right: 0.3rem;
 }
 
+/* --- General content --- */
+
+h1 {
+    margin: 1rem 0.5rem 1rem 0.5rem;
+    font-size: 200%;
+    font-weight: normal;
+    color: var(--highlight-color);
+}
+
+h2.subtitle {
+    margin: -0.5rem 0.5rem 1rem 0.5rem;
+    font-size: 150%;
+    font-weight: normal;
+    color: var(--content-text-secondary);
+}
+
+.empty-value {
+    color: var(--content-text-secondary);
+    opacity: 50%;
+}
+
 /* --- Item lists --- */
 
 .item-list {
@@ -375,6 +396,22 @@ small screens.
 
 .item-entry .item-actions a:hover {
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
+}
+
+.properties {
+    max-width: 30rem;
+}
+
+.properties .title {
+    box-sizing: border-box;
+    font-weight: bold;
+    padding: 0 0.5rem 0 0;
+}
+
+@media (min-width: 48em) {
+    .properties .title {
+        text-align: right;
+    }
 }
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
