@@ -1,0 +1,5 @@
+{% if history.status %}
+<span class="status-dot" style="color: {{ history.status_color }}">&#9679;</span>{{ history.get_status_display }}
+{% else %}
+<span class="empty-value">({{ empty_text|default:"none" }})</span>
+{% endif %}

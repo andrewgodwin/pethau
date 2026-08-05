@@ -50,11 +50,7 @@
             <span class="name">{{ asset.name }}</span>
         </a>
         <span class="col2">
-            {% if asset.current_history.status %}
-                {{ asset.current_history.get_status_display }}
-            {% else %}
-                <span class="empty-value">(unknown)</span>
-            {% endif %}
+            {% include "_status.html" with history=asset.current_history empty_text="unknown" %}
         </span>
         <span class="col3">
             {% if asset.current_history.location %}
@@ -64,7 +60,7 @@
             {% endif %}
         </span>
         <span class="item-actions">
-            <a href="{{ asset.urls.edit }}"><i class="fas fa-edit"></i></a>
+            <a href="{{ asset.urls.edit }}" class="edit"><i class="fas fa-edit"></i></a>
             <a href="{{ asset.urls.delete }}" class="delete"><i class="fas fa-trash"></i></a>
         </span>
     </div>

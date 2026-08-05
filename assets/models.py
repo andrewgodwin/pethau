@@ -7,6 +7,10 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 
 
+def asset_category_choices():
+    return [(category, category) for category in settings.ASSET_CATEGORY_CHOICES]
+
+
 class Image(models.Model):
     """A general image - referenced by other models."""
 
@@ -104,12 +108,21 @@ class Owner(models.Model):
 
     name = models.CharField(max_length=255)
     notes = models.TextField(blank=True, null=True)
+    default = models.BooleanField(
+        default=False,
+        help_text="Auto-selected as the owner when creating a new asset.",
+    )
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.default:
+            Owner.objects.exclude(pk=self.pk).update(default=False)
+        super().save(*args, **kwargs)
 
 
 class Asset(models.Model):
@@ -150,7 +163,9 @@ class Asset(models.Model):
     serial = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
 
-    category = models.CharField(max_length=255, blank=True, null=True)
+    category = models.CharField(
+        max_length=255, blank=True, null=True, choices=asset_category_choices
+    )
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -255,3 +270,7 @@ class AssetHistory(models.Model):
 
     def __str__(self):
         return f"{self.asset} @ {self.when:%Y-%m-%d %H:%M}"
+
+    @property
+    def status_color(self):
+        return settings.ASSET_STATUS_COLORS.get(self.status, "#999")

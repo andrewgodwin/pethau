@@ -19,6 +19,8 @@
     --delete-color-text: #fff;
     --edit-color: #36b;
     --edit-color-text: #fff;
+    --audit-color: #282;
+    --audit-color-text: #fff;
 }
 
 body {
@@ -65,10 +67,10 @@ The content `<div>` is where all your content goes.
 */
 .content {
     margin: 0 auto;
-    padding: 0 2em;
+    padding: 0 2rem;
     max-width: 1200px;
     margin-bottom: 50px;
-    line-height: 1.6em;
+    line-height: 1.6rem;
 }
 
 /*
@@ -90,7 +92,7 @@ Sidebar menu
 #menu a {
     border: none;
     color: var(--sidebar-text);
-    padding: 0.6em 0 0.6em 0.6em;
+    padding: 0.6rem 0 0.6rem 0.6rem;
 }
 
 #menu .pure-menu,
@@ -105,7 +107,7 @@ Sidebar menu
 }
 
 #menu .pure-menu li a {
-    padding: 0.5em 1em;
+    padding: 0.5rem 1rem;
 }
 
 #menu .pure-menu li a:hover,
@@ -150,9 +152,9 @@ small screens.
     background: rgba(0, 0, 0, 0.7);
     font-size: 10px; /* change this value to increase/decrease button size */
     z-index: 10;
-    width: 2em;
+    width: 2rem;
     height: auto;
-    padding: 2.1em 1.6em;
+    padding: 2.1rem 1.6rem;
 }
 
 .menu-link:hover,
@@ -171,18 +173,18 @@ small screens.
     background-color: #fff;
     pointer-events: none;
     width: 100%;
-    height: 0.2em;
+    height: 0.2rem;
 }
 
 .menu-link span:before,
 .menu-link span:after {
     position: absolute;
-    margin-top: -0.6em;
+    margin-top: -0.6rem;
     content: " ";
 }
 
 .menu-link span:after {
-    margin-top: 0.6em;
+    margin-top: 0.6rem;
 }
 
 /* --- Top-of-table actions menu --- */
@@ -228,6 +230,11 @@ small screens.
     color: var(--edit-color-text);
 }
 
+.actions a.audit {
+    background: var(--audit-color);
+    color: var(--audit-color-text);
+}
+
 .actions a:hover,
 .actions button:hover {
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
@@ -263,6 +270,7 @@ small screens.
     background: var(--content-bar-background);
     border-radius: 0.3rem;
     margin: 1rem 0.5rem;
+    max-width: 48rem;
 }
 
 .context-box h1 {
@@ -300,20 +308,25 @@ small screens.
 }
 
 .context-box fieldset {
-    padding: 1rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.context-box label {
+    margin-bottom: -0.2rem;
 }
 
 .context-box input[type="text"],
 .context-box textarea,
 .context-box select {
-    width: 30rem;
+    width: 100%;
+    max-width: 32rem;
     background: var(--content-background);
     color: var(--content-text);
 }
 
 .context-box legend {
-    margin: 0.2rem 0 -0.8rem 0;
-    padding-left: 11.5em;
+    margin: -0.4rem 0 -0.4rem 0;
+    padding-left: 11.5rem;
     border-bottom: 0;
     text-transform: uppercase;
     font-weight: bold;
@@ -321,10 +334,14 @@ small screens.
     color: var(--content-text-secondary);
 }
 
+.context-box .pure-control-group {
+    margin: 0 0 0.3rem 0;
+}
+
 .context-box .error {
     display: block;
     color: #b00020;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .context-box .pure-control-group.required label::before {
@@ -335,30 +352,6 @@ small screens.
 
 .context-box .box-content {
     padding: 0rem 1rem;
-}
-
-.image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    margin: 0 0 1rem 0;
-}
-
-.image-thumb {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    background: var(--content-item-background);
-    border-radius: 0.3rem;
-    padding: 0.4rem;
-}
-
-.image-thumb img {
-    width: 96px;
-    height: 96px;
-    object-fit: cover;
-    border-radius: 0.2rem;
 }
 
 .context-box button[type="submit"] {
@@ -373,14 +366,14 @@ small screens.
 /* --- General content --- */
 
 h1 {
-    margin: 1rem 0.5rem 1rem 0.5rem;
+    margin: 1rem 0.5rem 0.5rem 0.5rem;
     font-size: 200%;
     font-weight: normal;
     color: var(--highlight-color);
 }
 
 h2.subtitle {
-    margin: -0.5rem 0.5rem 1rem 0.5rem;
+    margin: -0.3rem 0.5rem 0.7rem 0.5rem;
     font-size: 150%;
     font-weight: normal;
     color: var(--content-text-secondary);
@@ -507,12 +500,12 @@ h2.subtitle {
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
 }
 
-.item-entry.empty-list {
+.item-entry.rempty-list {
     justify-content: center;
 }
 
 .properties {
-    max-width: 30rem;
+    box-sizing: border-box;
 }
 
 .properties .title {
@@ -521,18 +514,50 @@ h2.subtitle {
     padding: 0 0.5rem 0 0;
 }
 
+.status-dot {
+    font-size: 1.3rem;
+    line-height: 1;
+    margin-right: 0.2rem;
+    vertical-align: -0.05rem;
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    gap: 0.7rem;
+    box-sizing: border-box;
+}
+
+.image-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--content-item-background);
+    border-radius: 0.3rem;
+    padding: 0.4rem;
+}
+
+.image-thumb img {
+    width: 256px;
+    height: 256px;
+    object-fit: cover;
+    border-radius: 0.2rem;
+}
+
 .item-header .col3,
 .item-entry .col3 {
     display: none;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 48rem) {
     .properties .title {
         text-align: right;
     }
 }
 
-@media (min-width: 60em) {
+@media (min-width: 60rem) {
     .item-header .col3,
     .item-entry .col3 {
         display: block;
@@ -542,9 +567,9 @@ h2.subtitle {
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
 /*
-Hides the menu at `48em`, but modify this based on your app's needs.
+Hides the menu at `48rem`, but modify this based on your app's needs.
 */
-@media (min-width: 48em) {
+@media (min-width: 48rem) {
     .header,
     .content {
         padding-left: 0.5rem;
@@ -570,7 +595,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 48rem) {
     /* Only apply this when the window is small. Otherwise, the following
     case results in extra padding on the left:
         * Make the window small.

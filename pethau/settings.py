@@ -19,6 +19,18 @@ ASSET_TAG_PREFIX = env("ASSET_TAG_PREFIX")
 ASSET_TAG_DIGITS = env.int("ASSET_TAG_DIGITS")
 ASSET_CATEGORY_CHOICES = env.list("ASSET_CATEGORY_CHOICES")
 
+# Colours used for the status indicator dot, keyed by AssetHistory.STATUS_CHOICES value
+ASSET_STATUS_COLORS = env.dict(
+    "ASSET_STATUS_COLORS",
+    default={
+        "active": "#2ecc71",
+        "missing": "#e67e22",
+        "needs_repair": "#f1c40f",
+        "destroyed": "#e74c3c",
+        "archived": "#95a5a6",
+    },
+)
+
 # Application definition
 
 INSTALLED_APPS = [

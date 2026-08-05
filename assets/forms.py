@@ -57,6 +57,9 @@ class CreateAssetForm(SingleImageMixin, forms.ModelForm):
         self.fields["tag"].widget.attrs.update({"autofocus": True})
         if not self.is_bound and not self.instance.pk:
             self.fields["tag"].initial = Asset.next_tag()
+            default_owner = Owner.objects.filter(default=True).first()
+            if default_owner:
+                self.fields["owner"].initial = default_owner
 
 
 class EditAssetForm(SingleImageMixin, forms.ModelForm):

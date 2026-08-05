@@ -46,7 +46,8 @@ class AssetIdentifierInline(admin.TabularInline):
 
 @admin.register(Owner)
 class OwnerAdmin(admin.ModelAdmin):
-    list_display = ["name", "created"]
+    list_display = ["name", "default", "created"]
+    list_filter = ["default"]
     search_fields = ["name", "notes"]
 
 
