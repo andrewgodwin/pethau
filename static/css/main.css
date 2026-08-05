@@ -319,7 +319,7 @@ small screens.
 .context-box textarea,
 .context-box select {
     width: 100%;
-    max-width: 30rem;
+    max-width: 32rem;
     background: var(--content-background);
     color: var(--content-text);
 }
@@ -332,6 +332,12 @@ small screens.
     font-weight: bold;
     letter-spacing: 2px;
     color: var(--content-text-secondary);
+}
+
+.context-box fieldset .image-gallery {
+    margin: 0.3rem 0 0.4rem 0;
+    padding-left: 11.5rem;
+    flex-direction: row;
 }
 
 .context-box .pure-control-group {
@@ -366,7 +372,7 @@ small screens.
 /* --- Model combo (searchable select) --- */
 
 .model-combo {
-    display: flex;
+    display: inline;
     align-items: center;
     gap: 0.4rem;
     position: relative;

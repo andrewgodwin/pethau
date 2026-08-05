@@ -1,5 +1,5 @@
 <div class="pure-control-group field-{{ field.name }} {% if field.field.required %}required{% endif %}">
-    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <label for="{{ field.id_for_label }}">{{ label|default:field.label }}</label>
     {{ field }}
     {% if field.help_text %}
     <span class="help-text">{{ field.help_text }}</span>

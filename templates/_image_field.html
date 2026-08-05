@@ -7,6 +7,8 @@
         </div>
     </div>
     {% include "_field.html" with field=form.remove_image %}
-    {% endif %}
+    {% include "_field.html" with field=form.image_file label="Replace image" %}
+    {% else %}
     {% include "_field.html" with field=form.image_file %}
+    {% endif %}
 </fieldset>
