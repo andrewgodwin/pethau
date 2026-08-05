@@ -34,9 +34,6 @@ body {
     height: auto;
 }
 
-/*
-Add transition to containers so they can push in and out.
-*/
 #layout,
 #menu,
 .menu-link {
@@ -47,25 +44,17 @@ Add transition to containers so they can push in and out.
     transition: all 0.2s ease-out;
 }
 
-/*
-This is the parent `<div>` that contains the menu and the content area.
-*/
 #layout {
     position: relative;
     left: 0;
     padding-left: 0;
 }
+
 #layout.active #menu {
     left: 150px;
     width: 150px;
 }
 
-#layout.active .menu-link {
-    left: 150px;
-}
-/*
-The content `<div>` is where all your content goes.
-*/
 .content {
     margin: 0 auto;
     padding: 0 0.5rem;
@@ -74,9 +63,7 @@ The content `<div>` is where all your content goes.
     line-height: 1.6rem;
 }
 
-/*
-Sidebar menu
-*/
+/* --- Sidebar menu --- */
 
 #menu {
     margin-left: -150px; /* "#menu" width */
@@ -133,59 +120,27 @@ Sidebar menu
     letter-spacing: 0.4rem;
 }
 
-/* -- Dynamic Button For Responsive Menu -------------------------------------*/
+/* --- Top menu for small screens ---*/
 
-/*
-The button to open/close the Menu is custom-made and not part of Pure. Here's
-how it works:
-*/
-
-/*
-`.menu-link` represents the responsive menu toggle that shows/hides on
-small screens.
-*/
-.menu-link {
-    position: fixed;
-    display: block; /* show this only on small screens */
-    top: 0;
-    left: 0; /* "#menu width" */
-    background: #000;
-    background: rgba(0, 0, 0, 0.7);
-    font-size: 10px; /* change this value to increase/decrease button size */
-    z-index: 10;
-    width: 2rem;
-    height: auto;
-    padding: 2.1rem 1.6rem;
+.top-menu {
+    background: var(--sidebar-background);
+    color: var(--sidebar-text);
+    font-size: 2rem;
+    padding: 0 0.5rem;
 }
 
-.menu-link:hover,
-.menu-link:focus {
-    background: #000;
+.top-menu a {
+    display: inline-block;
+    color: var(--sidebar-text);
+    padding: 0.5rem 0.5rem;
 }
 
-.menu-link span {
-    position: relative;
-    display: block;
+.top-menu a:hover {
+    background: rgba(200, 200, 255, 0.15);
 }
 
-.menu-link span,
-.menu-link span:before,
-.menu-link span:after {
-    background-color: #fff;
-    pointer-events: none;
-    width: 100%;
-    height: 0.2rem;
-}
-
-.menu-link span:before,
-.menu-link span:after {
-    position: absolute;
-    margin-top: -0.6rem;
-    content: " ";
-}
-
-.menu-link span:after {
-    margin-top: 0.6rem;
+.top-menu a.pure-menu-selected {
+    background: rgba(200, 200, 255, 0.15);
 }
 
 /* --- Top-of-table actions menu --- */
@@ -695,17 +650,16 @@ Hides the menu at `48rem`, but modify this based on your app's needs.
         padding-left: 150px; /* left col width "#menu" */
         left: 0;
     }
+
     #menu {
         left: 150px;
     }
 
-    .menu-link {
-        position: fixed;
-        left: 150px;
+    .top-menu {
         display: none;
     }
 
-    #layout.active .menu-link {
+    #layout.active .top-menu {
         left: 150px;
     }
 }
