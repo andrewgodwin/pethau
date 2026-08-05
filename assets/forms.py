@@ -15,7 +15,7 @@ class SingleImageMixin:
         self.fields["image_file"] = forms.ImageField(required=False, label="Image")
         if self.instance.pk and self.instance.image_id:
             self.fields["remove_image"] = forms.BooleanField(
-                required=False, label="Remove current image"
+                required=False, label="Remove image"
             )
 
     def save_image(self, instance):
@@ -53,6 +53,7 @@ class CreateAssetForm(SingleImageMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["model"].queryset = Model.objects.order_by("manufacturer", "name")
+        self.fields["model"].widget = forms.HiddenInput()
         self.fields["owner"].queryset = Owner.objects.order_by("name")
         self.fields["tag"].widget.attrs.update({"autofocus": True})
         if not self.is_bound and not self.instance.pk:
@@ -87,6 +88,7 @@ class EditAssetForm(SingleImageMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["model"].queryset = Model.objects.order_by("manufacturer", "name")
+        self.fields["model"].widget = forms.HiddenInput()
         self.fields["owner"].queryset = Owner.objects.order_by("name")
         self.fields["tag"].widget.attrs.update({"autofocus": True})
 

@@ -1,0 +1,27 @@
+{% if model %}
+<input type="hidden" id="id_model" name="model" value="{{ model.pk }}" hx-swap-oob="true" />
+<script>
+    document.getElementById("model-search").value = "{{ model|escapejs }}";
+    document.getElementById("model-modal").close();
+</script>
+{% else %}
+<h1>New Model</h1>
+<form
+    class="pure-form pure-form-aligned"
+    hx-post="{% url 'model-quick-create' %}"
+    hx-target="#model-modal-body"
+    hx-swap="innerHTML"
+>
+    {% include "model/_fields.html" %}
+    <div class="footer">
+        <button type="submit" class="pure-button pure-button-primary">Create</button>
+        <button
+            type="button"
+            class="pure-button cancel"
+            hx-on:click="document.getElementById('model-modal').close()"
+        >
+            Cancel
+        </button>
+    </div>
+</form>
+{% endif %}

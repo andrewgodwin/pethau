@@ -8,19 +8,7 @@
 
     {% csrf_token %}
 
-    {% if form.non_field_errors %}
-    <ul class="errorlist">
-        {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <fieldset>
-        {% include "_field.html" with field=form.name %}
-        {% include "_field.html" with field=form.manufacturer %}
-        {% include "_field.html" with field=form.short_name %}
-    </fieldset>
+    {% include "model/_fields.html" %}
     {% include "_image_field.html" %}
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">{% if object %}Save{% else %}Create{% endif %}</button>

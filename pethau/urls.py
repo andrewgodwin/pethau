@@ -34,6 +34,8 @@ from assets.views.model import (
     ModelDeleteView,
     ModelDetailView,
     ModelListView,
+    ModelQuickCreateView,
+    ModelSearchView,
     ModelUpdateView,
 )
 
@@ -47,6 +49,12 @@ urlpatterns = [
     path("assets/<int:pk>/delete/", AssetDeleteView.as_view(), name="asset-delete"),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),
+    path("models/search/", ModelSearchView.as_view(), name="model-search"),
+    path(
+        "models/quick-create/",
+        ModelQuickCreateView.as_view(),
+        name="model-quick-create",
+    ),
     path("models/<int:pk>/", ModelDetailView.as_view(), name="model-detail"),
     path("models/<int:pk>/edit/", ModelUpdateView.as_view(), name="model-edit"),
     path("models/<int:pk>/delete/", ModelDeleteView.as_view(), name="model-delete"),

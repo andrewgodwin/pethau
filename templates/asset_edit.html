@@ -19,7 +19,7 @@
     <fieldset>
         {% include "_field.html" with field=form.tag %}
         {% include "_field.html" with field=form.owner %}
-        {% include "_field.html" with field=form.model %}
+        {% include "model/_field.html" %}
     </fieldset>
     <fieldset>
         <legend>Info</legend>
@@ -38,4 +38,7 @@
         <a class="pure-button cancel" href="javascript:history.back()">Cancel</a>
     </div>
 </form>
+<dialog id="model-modal" class="model-modal context-box">
+    <div id="model-modal-body"></div>
+</dialog>
 {% endblock content %}

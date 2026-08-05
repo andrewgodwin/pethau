@@ -319,7 +319,7 @@ small screens.
 .context-box textarea,
 .context-box select {
     width: 100%;
-    max-width: 32rem;
+    max-width: 30rem;
     background: var(--content-background);
     color: var(--content-text);
 }
@@ -361,6 +361,83 @@ small screens.
 
 .context-box button {
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
+}
+
+/* --- Model combo (searchable select) --- */
+
+.model-combo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+    max-width: 32rem;
+}
+
+.model-search-input {
+    flex: 1 1 auto;
+}
+
+.model-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 2.4rem;
+    max-height: 12rem;
+    overflow-y: auto;
+    background: var(--content-background);
+    border: 1px solid var(--content-bar-item);
+    border-radius: 0.3rem;
+    z-index: 10;
+}
+
+.model-options:empty {
+    display: none;
+}
+
+.model-option {
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+}
+
+.model-option:hover,
+.model-option:focus,
+.model-option.active {
+    background: var(--content-item-background);
+}
+
+.model-option.empty {
+    color: var(--content-text-secondary);
+    opacity: 60%;
+    cursor: default;
+}
+
+.model-add-btn {
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 0.3rem;
+    background: var(--highlight-color);
+    color: var(--highlight-color-text);
+    cursor: pointer;
+}
+
+.model-add-btn:hover {
+    background: var(--highlight-color-hover);
+}
+
+/* --- Model quick-create modal --- */
+
+dialog.model-modal {
+    border: none;
+    padding: 0;
+    width: 28rem;
+    max-width: 90vw;
+    color: inherit;
+}
+
+dialog.model-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /* --- General content --- */

@@ -69,3 +69,42 @@ class ModelDeleteView(DeleteView):
     model = Model
     template_name = "model_confirm_delete.html"
     success_url = reverse_lazy("model-list")
+
+
+class ModelSearchView(ListView):
+    """
+    HTMX partial: returns a filtered, capped list of models for the search-as-you-type
+    combo box on the asset form.
+    """
+
+    model = Model
+    template_name = "model/_search_options.html"
+    context_object_name = "models"
+
+    def get_queryset(self):
+        queryset = Model.objects.order_by("manufacturer", "name")
+        query = self.request.GET.get("q", "").strip()
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query)
+                | Q(manufacturer__icontains=query)
+                | Q(short_name__icontains=query)
+            )
+        return queryset[:20]
+
+
+class ModelQuickCreateView(CreateView):
+    """
+    HTMX partial: renders/handles the "+" popup form for creating a model without
+    leaving the asset form.
+    """
+
+    model = Model
+    form_class = ModelForm
+    template_name = "model/_quick_create.html"
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return self.render_to_response(
+            self.get_context_data(form=None, model=self.object)
+        )
