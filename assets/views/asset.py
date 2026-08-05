@@ -21,7 +21,7 @@ class AssetCreateView(FormView):
     Create a new asset and its initial history entry.
     """
 
-    template_name = "asset_create.html"
+    template_name = "asset/create.html"
     form_class = CreateAssetForm
     success_url = reverse_lazy("asset-list")
 
@@ -40,7 +40,7 @@ class AssetCreateView(FormView):
 
 class AssetListView(ListView):
     model = Asset
-    template_name = "asset_list.html"
+    template_name = "asset/list.html"
     context_object_name = "assets"
     paginate_by = 100
 
@@ -65,14 +65,14 @@ class AssetListView(ListView):
 
 class AssetDetailView(DetailView):
     model = Asset
-    template_name = "asset_detail.html"
+    template_name = "asset/detail.html"
     context_object_name = "asset"
 
 
 class AssetUpdateView(UpdateView):
     model = Asset
     form_class = EditAssetForm
-    template_name = "asset_edit.html"
+    template_name = "asset/edit.html"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -87,7 +87,7 @@ class AssetAuditView(CreateView):
 
     model = AssetHistory
     form_class = AssetAuditForm
-    template_name = "asset_audit.html"
+    template_name = "asset/audit.html"
 
     def dispatch(self, request, *args, **kwargs):
         self.asset = get_object_or_404(Asset, pk=kwargs["pk"])
@@ -131,7 +131,7 @@ class AssetDeleteView(DeleteView):
     """
 
     model = Asset
-    template_name = "asset_confirm_delete.html"
+    template_name = "asset/confirm_delete.html"
     success_url = reverse_lazy("asset-list")
 
     def form_valid(self, form):

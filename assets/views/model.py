@@ -14,7 +14,7 @@ from assets.models import Model
 
 class ModelListView(ListView):
     model = Model
-    template_name = "model_list.html"
+    template_name = "model/list.html"
     context_object_name = "models"
     paginate_by = 100
 
@@ -39,14 +39,14 @@ class ModelListView(ListView):
 
 class ModelDetailView(DetailView):
     model = Model
-    template_name = "model_detail.html"
+    template_name = "model/detail.html"
     context_object_name = "model"
 
 
 class ModelCreateView(CreateView):
     model = Model
     form_class = ModelForm
-    template_name = "model_form.html"
+    template_name = "model/form.html"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -57,7 +57,7 @@ class ModelCreateView(CreateView):
 class ModelUpdateView(UpdateView):
     model = Model
     form_class = ModelForm
-    template_name = "model_form.html"
+    template_name = "model/form.html"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -67,7 +67,7 @@ class ModelUpdateView(UpdateView):
 
 class ModelDeleteView(DeleteView):
     model = Model
-    template_name = "model_confirm_delete.html"
+    template_name = "model/confirm_delete.html"
     success_url = reverse_lazy("model-list")
 
 
