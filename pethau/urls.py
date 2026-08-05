@@ -27,6 +27,7 @@ from assets.views.asset import (
     AssetDeleteView,
     AssetDetailView,
     AssetListView,
+    AssetSearchView,
     AssetUpdateView,
 )
 from assets.views.model import (
@@ -43,6 +44,7 @@ urlpatterns = [
     path("", RedirectView.as_view(pattern_name="asset-list", permanent=False)),
     path("assets/", AssetListView.as_view(), name="asset-list"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
+    path("assets/search/", AssetSearchView.as_view(), name="asset-search"),
     path("assets/<int:pk>/", AssetDetailView.as_view(), name="asset-detail"),
     path("assets/<int:pk>/edit/", AssetUpdateView.as_view(), name="asset-edit"),
     path("assets/<int:pk>/audit/", AssetAuditView.as_view(), name="asset-audit"),

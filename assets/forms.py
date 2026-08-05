@@ -112,6 +112,7 @@ class AssetAuditForm(forms.ModelForm):
         if asset is not None:
             location_queryset = location_queryset.exclude(pk=asset.pk)
         self.fields["location"].queryset = location_queryset
+        self.fields["location"].widget = forms.HiddenInput()
 
 
 class ModelForm(SingleImageMixin, forms.ModelForm):

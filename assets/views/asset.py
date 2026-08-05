@@ -119,6 +119,8 @@ class AssetAuditView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["asset"] = self.asset
+        current = self.asset.current_history
+        context["current_location"] = current.location if current else None
         return context
 
 
@@ -138,3 +140,26 @@ class AssetDeleteView(DeleteView):
         self.object.deleted = timezone.now()
         self.object.save(update_fields=["deleted"])
         return HttpResponseRedirect(success_url)
+
+
+class AssetSearchView(ListView):
+    """
+    HTMX partial: returns a filtered, capped list of assets for the search-as-you-type
+    combo box on the audit form's location field.
+    """
+
+    model = Asset
+    template_name = "asset/_search_options.html"
+    context_object_name = "assets"
+
+    def get_queryset(self):
+        queryset = Asset.objects.filter(deleted__isnull=True).order_by("tag")
+        query = self.request.GET.get("q", "").strip()
+        if query:
+            queryset = queryset.filter(
+                Q(tag__icontains=query) | Q(name__icontains=query)
+            )
+        exclude_pk = self.request.GET.get("exclude", "")
+        if exclude_pk.isdigit():
+            queryset = queryset.exclude(pk=exclude_pk)
+        return queryset[:20]

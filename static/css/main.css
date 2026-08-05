@@ -369,9 +369,9 @@ small screens.
     background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
 }
 
-/* --- Model combo (searchable select) --- */
+/* --- Search combo (searchable select) --- */
 
-.model-combo {
+.combo {
     display: inline;
     align-items: center;
     gap: 0.4rem;
@@ -379,15 +379,15 @@ small screens.
     max-width: 32rem;
 }
 
-.model-search-input {
+.combo-search {
     flex: 1 1 auto;
 }
 
-.model-options {
+.combo-options {
     position: absolute;
     top: 100%;
     left: 0;
-    right: 2.4rem;
+    right: 0;
     max-height: 12rem;
     overflow-y: auto;
     background: var(--content-background);
@@ -396,22 +396,27 @@ small screens.
     z-index: 10;
 }
 
-.model-options:empty {
+/* Leave room for the "+" button that sits to the right of the model combo */
+.model-combo .combo-options {
+    right: 2.4rem;
+}
+
+.combo-options:empty {
     display: none;
 }
 
-.model-option {
+.combo-option {
     padding: 0.3rem 0.5rem;
     cursor: pointer;
 }
 
-.model-option:hover,
-.model-option:focus,
-.model-option.active {
+.combo-option:hover,
+.combo-option:focus,
+.combo-option.active {
     background: var(--content-item-background);
 }
 
-.model-option.empty {
+.combo-option.empty {
     color: var(--content-text-secondary);
     opacity: 60%;
     cursor: default;

@@ -1,0 +1,23 @@
+<div class="pure-control-group field-location">
+    <label for="id_location">Location</label>
+    <div class="combo">
+        <input
+            type="text"
+            class="combo-search"
+            name="q"
+            autocomplete="off"
+            placeholder="Search assets…"
+            value="{{ current_location|default:'' }}"
+            hx-get="{% url 'asset-search' %}?exclude={{ asset.pk }}"
+            hx-trigger="input changed delay:200ms, focus"
+            hx-target="next .combo-options"
+            hx-swap="innerHTML"
+            hx-params="q"
+        />
+        {{ form.location }}
+        <div class="combo-options"></div>
+    </div>
+    {% for error in form.location.errors %}
+    <span class="error">{{ error }}</span>
+    {% endfor %}
+</div>
