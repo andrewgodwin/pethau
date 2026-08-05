@@ -8,7 +8,6 @@
     </button>
     <button class="search-btn" type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
     <span class="spacer"></span>
-    <a href="{% url 'asset-list' %}"><i class="fas fa-refresh"></i></a>
     <a class="main" href="{% url 'asset-create' %}">New</a>
 </form>
 <script>
@@ -31,9 +30,9 @@
 <div class="item-list">
     <div class="item-header">
         <span class="item-thumb"></span>
-        <span class="tag">Tag / Name</span>
-        <span class="col2">Status</span>
-        <span class="col3">Location</span>
+        <span class="col1">Tag / Name</span>
+        <span class="col2">Status / Loc</span>
+        <span class="col3">Category</span>
         <span class="item-actions">Actions</span>
     </div>
     {% for asset in assets %}
@@ -45,21 +44,23 @@
             <i class="fas fa-box"></i>
             {% endif %}
         </a>
-        <a href="{{ asset.urls.view }}" class="tag">
+        <a href="{{ asset.urls.view }}" class="col1">
             {{ asset.tag }}
             <span class="name">{{ asset.name }}</span>
         </a>
         <span class="col2">
             {% include "_status.html" with history=asset.current_history empty_text="unknown" %}
+            {% if asset.current_history.location %}
+                <a class="location" href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location.name|default:asset.current_history.location.tag }}</a>
+            {% endif %}
         </span>
         <span class="col3">
-            {% if asset.current_history.location %}
-                <a href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location }}</a>
-            {% else %}
-                <span class="empty-value">(unknown)</span>
+            {% if asset.category %}
+                {{ asset.category }}
             {% endif %}
         </span>
         <span class="item-actions">
+            <a href="{{ asset.urls.audit }}" class="audit"><i class="fas fa-clipboard-check"></i></a>
             <a href="{{ asset.urls.edit }}" class="edit"><i class="fas fa-edit"></i></a>
             <a href="{{ asset.urls.delete }}" class="delete"><i class="fas fa-trash"></i></a>
         </span>
