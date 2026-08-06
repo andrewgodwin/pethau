@@ -1,3 +1,7 @@
+import hashlib
+import secrets
+
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -57,3 +61,44 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.name
+
+
+class ApiKey(models.Model):
+    """
+    An API key that authenticates as a specific User for the API.
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="api_keys",
+    )
+    name = models.CharField(
+        max_length=255, blank=True, help_text="e.g. 'RFID scanner script'"
+    )
+
+    prefix = models.CharField(max_length=12, unique=True, editable=False)
+    # We only store the hashed key, not the raw token.
+    hashed_key = models.CharField(max_length=64, unique=True, editable=False)
+
+    created = models.DateTimeField(auto_now_add=True)
+    last_used = models.DateTimeField(blank=True, null=True, editable=False)
+
+    def __str__(self):
+        return self.name or f"Key for {self.user}"
+
+    @staticmethod
+    def hash_token(raw_token: str) -> str:
+        return hashlib.sha256(raw_token.encode()).hexdigest()
+
+    @classmethod
+    def generate(cls) -> tuple[str, str, str]:
+        """
+        Generate a new raw token plus its prefix/hash.
+
+        Returns (raw_token, prefix, hashed_key); the raw_token is never persisted --
+        only prefix and hashed_key are.
+        """
+        raw_token = secrets.token_urlsafe(32)
+        prefix = raw_token[:8]
+        return raw_token, prefix, cls.hash_token(raw_token)

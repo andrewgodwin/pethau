@@ -22,6 +22,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 from django.views.generic import RedirectView
 
+from api.ninja import api as ninja_api
 from assets.views.asset import (
     AssetAuditView,
     AssetCreateView,
@@ -82,6 +83,7 @@ urlpatterns = [
     path("models/<int:pk>/edit/", ModelUpdateView.as_view(), name="model-edit"),
     path("models/<int:pk>/delete/", ModelDeleteView.as_view(), name="model-delete"),
     path("admin/", admin.site.urls),
+    path("api/v1/", ninja_api.urls),
 ]
 
 if settings.DEBUG:

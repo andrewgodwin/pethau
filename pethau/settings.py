@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "imagekit",
     "accounts",
     "assets",
+    "api",
 ]
 
 MIDDLEWARE = [
