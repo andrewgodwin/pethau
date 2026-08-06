@@ -1,5 +1,5 @@
 {% for model in models %}
-<div class="combo-option" data-id="{{ model.pk }}" data-name="{{ model }}">{{ model }}</div>
+<div class="combo-option" data-id="{{ model.pk }}" data-value="{{ model }}">{{ model }}</div>
 {% empty %}
 <div class="combo-option empty">No matches</div>
 {% endfor %}

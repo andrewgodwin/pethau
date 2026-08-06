@@ -1,5 +1,7 @@
 {% for asset in assets %}
-<div class="combo-option" data-id="{{ asset.pk }}" data-name="{{ asset }}">{{ asset }}</div>
+<div class="combo-option" data-id="{{ asset.pk }}" data-value="{{ asset.tag }}" data-label="{{ asset.name|default:'' }}">
+    {{ asset.tag }}{% if asset.name %} <span class="combo-option-name">{{ asset.name }}</span>{% endif %}
+</div>
 {% empty %}
 <div class="combo-option empty">No matches</div>
 {% endfor %}

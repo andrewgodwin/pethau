@@ -9,13 +9,14 @@
                 name="q"
                 autocomplete="off"
                 placeholder="Search assets…"
-                value="{{ current_value|default:'' }}"
+                value="{{ current_value.tag|default:'' }}"
                 hx-get="{% url 'asset-search' %}?exclude={{ exclude_pk }}"
                 hx-trigger="input changed delay:200ms, focus"
                 hx-target="next .combo-options"
                 hx-swap="innerHTML"
                 hx-params="q"
             />
+            <span class="combo-selected-name">{{ current_value.name|default:'' }}</span>
             {{ field }}
             <div class="combo-options"></div>
         </div>

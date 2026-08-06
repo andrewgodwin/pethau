@@ -411,6 +411,29 @@ body {
     cursor: default;
 }
 
+.combo-option-name {
+    color: var(--content-text-secondary);
+}
+
+.combo-selected-name {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    left: 0.6rem;
+    transform: translateY(-50%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    color: var(--content-text-secondary);
+    font-size: 0.85em;
+    pointer-events: none;
+}
+
+.combo-selected-name:empty {
+    display: none;
+}
+
 .icon-btn {
     flex: 0 0 auto;
     width: 2rem;

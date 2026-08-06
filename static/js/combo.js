@@ -19,10 +19,16 @@
         }
     }
 
+    function setSelectedName(combo, text) {
+        var label = combo.querySelector(".combo-selected-name");
+        if (label) label.textContent = text || "";
+    }
+
     function selectOption(combo, opt) {
         if (!opt || !opt.dataset.id) return;
         combo.querySelector("input[type=hidden]").value = opt.dataset.id;
-        combo.querySelector(".combo-search").value = opt.dataset.name;
+        combo.querySelector(".combo-search").value = opt.dataset.value;
+        setSelectedName(combo, opt.dataset.label);
         combo.querySelector(".combo-options").innerHTML = "";
     }
 
@@ -35,6 +41,7 @@
             // Require an explicit pick from the dropdown rather than
             // silently keeping whatever value was previously selected.
             hidden.value = "";
+            setSelectedName(combo, "");
         });
 
         search.addEventListener("keydown", function (e) {
