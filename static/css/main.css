@@ -16,12 +16,16 @@
     --sidebar-highlight: #00a65a;
     --sidebar-text: #ddd;
     --sidebar-highlight-text: #fff;
+    --sidebar-hover-bg: rgba(200, 200, 255, 0.15);
     --delete-color: #b33;
     --delete-color-text: #fff;
     --edit-color: #36b;
     --edit-color-text: #fff;
     --audit-color: #282;
     --audit-color-text: #fff;
+    --error-color: #b00020;
+    --radius: 0.3rem;
+    --hover-overlay: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
 }
 
 body {
@@ -37,10 +41,6 @@ body {
 #layout,
 #menu,
 .menu-link {
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -ms-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
 }
 
@@ -100,11 +100,11 @@ body {
 
 #menu .pure-menu li a:hover,
 #menu .pure-menu li a:focus {
-    background: rgba(200, 200, 255, 0.15);
+    background: var(--sidebar-hover-bg);
 }
 
 #menu .pure-menu-selected {
-    background: rgba(200, 200, 255, 0.15);
+    background: var(--sidebar-hover-bg);
     border-right: 5px solid var(--content-background);
 }
 
@@ -136,11 +136,11 @@ body {
 }
 
 .top-menu a:hover {
-    background: rgba(200, 200, 255, 0.15);
+    background: var(--sidebar-hover-bg);
 }
 
 .top-menu a.pure-menu-selected {
-    background: rgba(200, 200, 255, 0.15);
+    background: var(--sidebar-hover-bg);
 }
 
 /* --- Top-of-table actions menu --- */
@@ -151,7 +151,7 @@ body {
     gap: 0.3rem;
     padding: 0 0.4rem;
     background: var(--content-bar-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     height: 2.8rem;
     line-height: 2.5rem;
     margin: 0.5rem 0;
@@ -164,7 +164,7 @@ body {
     background: var(--content-bar-item);
     color: var(--content-bar-text);
     border: none;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     height: 2rem;
     line-height: 2rem;
     padding: 0 0.6rem;
@@ -190,26 +190,30 @@ body {
 }
 
 .actions a.delete,
-.actions button.delete {
-    background: var(--delete-color);
+.actions button.delete,
+.item-entry .item-actions a.delete {
+    background-color: var(--delete-color);
     color: var(--delete-color-text);
 }
 
 .actions a.edit,
-.actions button.edit {
-    background: var(--edit-color);
+.actions button.edit,
+.item-entry .item-actions a.edit {
+    background-color: var(--edit-color);
     color: var(--edit-color-text);
 }
 
 .actions a.audit,
-.actions button.audit {
-    background: var(--audit-color);
+.actions button.audit,
+.item-entry .item-actions a.audit {
+    background-color: var(--audit-color);
     color: var(--audit-color-text);
 }
 
 .actions a:hover,
-.actions button:hover {
-    background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
+.actions button:hover,
+.item-entry .item-actions a:hover {
+    background-image: var(--hover-overlay);
 }
 
 .actions .spacer {
@@ -248,7 +252,7 @@ body {
 
 .context-box {
     background: var(--content-bar-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     margin: 1rem 0.5rem;
     max-width: 48rem;
 }
@@ -259,13 +263,13 @@ body {
     background: var(--sidebar-highlight);
     color: var(--sidebar-highlight-text);
     font-size: 1.2rem;
-    border-radius: 0.3rem 0.3rem 0 0;
+    border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .context-box .footer {
     padding: 0.5rem 0.6rem;
     background: var(--content-bar-item);
-    border-radius: 0 0 0.3rem 0.3rem;
+    border-radius: 0 0 var(--radius) var(--radius);
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -273,7 +277,7 @@ body {
 }
 
 .context-box .footer button {
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
 }
 
 .context-box .footer button.delete {
@@ -282,10 +286,6 @@ body {
 }
 
 /* --- Forms --- */
-
-.context-box .pure-control-group {
-    margin-bottom: 0.7rem;
-}
 
 .context-box fieldset {
     padding: 0.3rem 0.5rem;
@@ -326,13 +326,13 @@ body {
 
 .context-box .error {
     display: block;
-    color: #b00020;
+    color: var(--error-color);
     font-size: 0.9rem;
 }
 
 .context-box .pure-control-group.required label::before {
     content: "\2022";
-    color: #b00020;
+    color: var(--error-color);
     margin-right: 0.3rem;
 }
 
@@ -346,7 +346,7 @@ body {
 }
 
 .context-box button {
-    background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
+    background-image: var(--hover-overlay);
 }
 
 /* --- Search combo (searchable select) --- */
@@ -381,7 +381,7 @@ body {
     overflow-y: auto;
     background: var(--content-background);
     border: 1px solid var(--content-bar-item);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     z-index: 10;
 }
 
@@ -411,15 +411,18 @@ body {
     cursor: default;
 }
 
-.model-add-btn {
+.icon-btn {
     flex: 0 0 auto;
     width: 2rem;
     height: 2rem;
     border: none;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.model-add-btn {
     background: var(--highlight-color);
     color: var(--highlight-color-text);
-    cursor: pointer;
 }
 
 .model-add-btn:hover {
@@ -453,15 +456,9 @@ button.scanner-trigger {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto;
-    width: 2rem;
-    height: 2rem;
     padding: 0;
-    border: none;
-    border-radius: 0.3rem;
     background: var(--content-bar-item);
     color: var(--content-bar-text);
-    cursor: pointer;
 }
 
 button.scanner-trigger:hover {
@@ -471,13 +468,13 @@ button.scanner-trigger:hover {
 .scanner-viewport {
     width: 100%;
     min-height: 16rem;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     overflow: hidden;
     background: #000;
 }
 
 .scanner-status {
-    color: #b00020;
+    color: var(--error-color);
     font-size: 0.9rem;
     margin-top: 0.5rem;
 }
@@ -498,21 +495,21 @@ button.scanner-trigger:hover {
     color: var(--content-bar-text);
     padding: 0.3rem 0.3rem;
     border: none;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
 }
 
 .item-entry select {
     background: var(--content-background);
     color: var(--content-text);
     border: none;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     padding: 0.2rem 0.3rem;
 }
 
 .bulk-audit-error {
-    color: #b00020;
+    color: var(--error-color);
     background: var(--content-item-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     padding: 0.4rem 0.6rem;
     margin: 0 0.5rem 0.5rem 0.5rem;
 }
@@ -540,22 +537,16 @@ h2.subtitle {
 
 .pure-button {
     background: var(--content-item-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
 }
 
 /* --- Item lists --- */
-
-.item-list {
-}
 
 .item-header {
     display: flex;
     align-items: center;
     padding: 0.3rem 0.5rem;
     color: var(--content-text-secondary);
-}
-
-.item-header {
     font-size: 90%;
     text-transform: uppercase;
     margin: 0 0 -0.3rem 0;
@@ -569,17 +560,20 @@ h2.subtitle {
     flex-grow: 2;
 }
 
-.item-header .col2 {
+.item-header .col2,
+.item-entry .col2 {
     width: 12rem;
     display: none;
 }
 
-.item-header .col3 {
+.item-header .col3,
+.item-entry .col3 {
     width: 10rem;
     display: none;
 }
 
-.item-header .item-actions {
+.item-header .item-actions,
+.item-entry .item-actions {
     width: 7rem;
     text-align: right;
 }
@@ -589,7 +583,7 @@ h2.subtitle {
     align-items: center;
     padding: 0.2rem 0.5rem;
     background: var(--content-item-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     min-height: 1.8rem;
 }
 
@@ -609,7 +603,7 @@ h2.subtitle {
     height: 2.5rem;
     flex: 0 0 auto;
     margin-right: 0.5rem;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     background: var(--content-bar-background);
     display: flex;
     align-items: center;
@@ -633,16 +627,6 @@ h2.subtitle {
     margin: -0.3rem 0 0 0;
 }
 
-.item-entry .col2 {
-    width: 12rem;
-    display: none;
-}
-
-.item-entry .col3 {
-    width: 10rem;
-    display: none;
-}
-
 .item-entry .location {
     color: var(--content-link);
     text-decoration: none;
@@ -655,35 +639,14 @@ h2.subtitle {
     color: var(--content-text);
 }
 
-.item-entry .item-actions {
-    width: 7rem;
-    text-align: right;
-}
-
 .item-entry .item-actions a {
     background-color: var(--highlight-color);
     color: var(--highlight-color-text);
     padding: 0.3rem 0.3rem;
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
 }
 
-.item-entry .item-actions a.audit {
-    background-color: var(--audit-color);
-}
-
-.item-entry .item-actions a.edit {
-    background-color: var(--edit-color);
-}
-
-.item-entry .item-actions a.delete {
-    background-color: var(--delete-color);
-}
-
-.item-entry .item-actions a:hover {
-    background-image: linear-gradient(rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.18));
-}
-
-.item-entry.rempty-list {
+.item-entry.empty-list {
     justify-content: center;
 }
 
@@ -718,7 +681,7 @@ h2.subtitle {
     align-items: center;
     gap: 0.3rem;
     background: var(--content-item-background);
-    border-radius: 0.3rem;
+    border-radius: var(--radius);
     padding: 0.4rem;
 }
 
@@ -729,6 +692,8 @@ h2.subtitle {
     border-radius: 0.2rem;
 }
 
+/* -- Responsive Styles (Media Queries) ------------------------------------- */
+
 @media (min-width: 40rem) {
     .item-header .col2,
     .item-entry .col2 {
@@ -736,25 +701,14 @@ h2.subtitle {
     }
 }
 
-@media (min-width: 48rem) {
-    .properties .title {
-        text-align: right;
-    }
-}
-
-@media (min-width: 60rem) {
-    .item-header .col3,
-    .item-entry .col3 {
-        display: block;
-    }
-}
-
-/* -- Responsive Styles (Media Queries) ------------------------------------- */
-
 /*
 Hides the menu at `48rem`, but modify this based on your app's needs.
 */
 @media (min-width: 48rem) {
+    .properties .title {
+        text-align: right;
+    }
+
     #layout {
         padding-left: 150px; /* left col width "#menu" */
         left: 0;
@@ -770,6 +724,13 @@ Hides the menu at `48rem`, but modify this based on your app's needs.
 
     #layout.active .top-menu {
         left: 150px;
+    }
+}
+
+@media (min-width: 60rem) {
+    .item-header .col3,
+    .item-entry .col3 {
+        display: block;
     }
 }
 
