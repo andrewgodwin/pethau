@@ -540,14 +540,14 @@ button.scanner-trigger:hover {
 /* --- General content --- */
 
 h1 {
-    margin: 1rem 0.5rem 0.5rem 0.5rem;
+    margin: 1rem 0.5rem 1rem 0.5rem;
     font-size: 200%;
     font-weight: normal;
     color: var(--highlight-color);
 }
 
 h2.subtitle {
-    margin: -0.3rem 0.5rem 0.7rem 0.5rem;
+    margin: -0.7rem 0.5rem 0.7rem 0.5rem;
     font-size: 150%;
     font-weight: normal;
     color: var(--content-text-secondary);
