@@ -172,12 +172,17 @@ body {
     cursor: pointer;
 }
 
-.actions .field-location label {
-    display: none;
+.actions input::placeholder {
+    color: var(--content-text-secondary);
 }
 
-.actions .field-location input {
-    width: 20rem;
+.actions .field-location {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.actions .field-location label {
+    display: none;
 }
 
 .actions button[hidden] {
@@ -353,15 +358,18 @@ body {
 }
 
 .combo {
-    display: inline;
+    display: flex;
     align-items: center;
     gap: 0.4rem;
     position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
     max-width: 32rem;
 }
 
 .combo-search {
     flex: 1 1 auto;
+    min-width: 0;
 }
 
 .combo-options {
@@ -418,9 +426,17 @@ body {
     background: var(--highlight-color-hover);
 }
 
-/* --- Model quick-create modal --- */
+/* --- App dialogs (model quick-create, barcode scanner) --- */
 
-dialog.model-modal {
+dialog.model-modal,
+dialog.scanner-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    max-height: 85vh;
+    overflow-y: auto;
     border: none;
     padding: 0;
     width: 28rem;
@@ -428,8 +444,42 @@ dialog.model-modal {
     color: inherit;
 }
 
-dialog.model-modal::backdrop {
+dialog.model-modal::backdrop,
+dialog.scanner-dialog::backdrop {
     background: rgba(0, 0, 0, 0.5);
+}
+
+button.scanner-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    border-radius: 0.3rem;
+    background: var(--content-bar-item);
+    color: var(--content-bar-text);
+    cursor: pointer;
+}
+
+button.scanner-trigger:hover {
+    background: var(--content-bar-item-hover);
+}
+
+.scanner-viewport {
+    width: 100%;
+    min-height: 16rem;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    background: #000;
+}
+
+.scanner-status {
+    color: #b00020;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
 
 /* --- Bulk audit --- */

@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
         <script src="{% static 'htmx/htmx.min.js' %}"></script>
+        <script src="{% static 'html5-qrcode/html5-qrcode.min.js' %}"></script>
         <title>{% block wholetitle %} {% block title %} {% endblock title %} - Pethau{% endblock wholetitle %}</title>
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -94,5 +95,6 @@
             });
         </script>
         <script src="{% static 'js/combo.js' %}"></script>
+        <script src="{% static 'js/scanner.js' %}"></script>
     </body>
 </html>

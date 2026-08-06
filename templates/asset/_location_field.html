@@ -4,6 +4,7 @@
         <div class="combo">
             <input
                 type="text"
+                id="{{ field.id_for_label }}-search"
                 class="combo-search location-search"
                 name="q"
                 autocomplete="off"
@@ -19,9 +20,7 @@
             <div class="combo-options"></div>
         </div>
         {% if scan_placeholder %}
-        <button type="button" class="placeholder-icon" disabled title="Barcode scanning coming soon">
-            <i class="fas fa-barcode"></i>
-        </button>
+        {% include "_barcode_scanner.html" with target=field.id_for_label|add:"-search" %}
         {% endif %}
     </div>
     {% for error in field.errors %}

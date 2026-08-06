@@ -1,0 +1,19 @@
+<button
+    type="button"
+    class="scanner-trigger"
+    data-target="{{ target }}"
+    data-dialog="scanner-dialog-{{ target }}"
+    title="Scan barcode"
+>
+    <i class="fas fa-barcode fa-width-fixed"></i>
+</button>
+<dialog id="scanner-dialog-{{ target }}" class="scanner-dialog context-box">
+    <h1>Scan Barcode</h1>
+    <div class="box-content">
+        <div id="scanner-viewport-{{ target }}" class="scanner-viewport"></div>
+        <div class="scanner-status"></div>
+    </div>
+    <div class="footer">
+        <button type="button" class="pure-button cancel scanner-cancel">Cancel</button>
+    </div>
+</dialog>
