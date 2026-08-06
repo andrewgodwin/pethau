@@ -115,6 +115,17 @@ class AssetAuditForm(forms.ModelForm):
         self.fields["location"].widget = forms.HiddenInput()
 
 
+class BulkAuditLocationForm(forms.Form):
+    """
+    Form for picking the location to bulk-audit against.
+    """
+
+    location = forms.ModelChoiceField(
+        queryset=Asset.objects.filter(deleted__isnull=True).order_by("tag"),
+        widget=forms.HiddenInput,
+    )
+
+
 class ModelForm(SingleImageMixin, forms.ModelForm):
     """
     Form for creating/editing a model.

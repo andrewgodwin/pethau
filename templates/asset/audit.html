@@ -18,7 +18,7 @@
 
     <fieldset>
         {% include "_field.html" with field=form.status %}
-        {% include "asset/_location_field.html" %}
+        {% include "asset/_location_field.html" with field=form.location exclude_pk=asset.pk current_value=current_location %}
         {% include "_field.html" with field=form.notes %}
     </fieldset>
     <div class="footer">

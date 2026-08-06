@@ -35,6 +35,12 @@
                 >
                     <i class="fas fa-border-top-left"></i>
                 </a>
+                <a
+                    href="/bulk-audit/"
+                    class="pure-menu-item {% if request.resolver_match.url_name|slice:':10' == 'bulk-audit' %}pure-menu-selected{% endif %}"
+                >
+                    <i class="fas fa-boxes-packing"></i>
+                </a>
             </div>
 
             <div id="menu">
@@ -51,9 +57,16 @@
                         </li>
                         <li class="pure-menu-item">
                             <a
-                                href="{% url 'model-list' %}"
+                                href="/models/"
                                 class="pure-menu-link {% if request.resolver_match.url_name|slice:':5' == 'model' %}pure-menu-selected{% endif %}"
                                 ><i class="fa-solid fa-border-top-left fa-width-fixed"></i> Models</a
+                            >
+                        </li>
+                        <li class="pure-menu-item">
+                            <a
+                                href="/bulk-audit/"
+                                class="pure-menu-link {% if request.resolver_match.url_name|slice:':10' == 'bulk-audit' %}pure-menu-selected{% endif %}"
+                                ><i class="fa-solid fa-boxes-packing fa-width-fixed"></i> Bulk Audit</a
                             >
                         </li>
                         <li class="pure-menu-item">

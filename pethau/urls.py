@@ -30,6 +30,12 @@ from assets.views.asset import (
     AssetSearchView,
     AssetUpdateView,
 )
+from assets.views.bulk_audit import (
+    BulkAuditAddEntryView,
+    BulkAuditEntryStatusView,
+    BulkAuditSetLocationView,
+    BulkAuditView,
+)
 from assets.views.model import (
     ModelCreateView,
     ModelDeleteView,
@@ -49,6 +55,18 @@ urlpatterns = [
     path("assets/<int:pk>/edit/", AssetUpdateView.as_view(), name="asset-edit"),
     path("assets/<int:pk>/audit/", AssetAuditView.as_view(), name="asset-audit"),
     path("assets/<int:pk>/delete/", AssetDeleteView.as_view(), name="asset-delete"),
+    path("bulk-audit/", BulkAuditView.as_view(), name="bulk-audit"),
+    path(
+        "bulk-audit/location/",
+        BulkAuditSetLocationView.as_view(),
+        name="bulk-audit-location",
+    ),
+    path("bulk-audit/add/", BulkAuditAddEntryView.as_view(), name="bulk-audit-add"),
+    path(
+        "bulk-audit/entries/<int:pk>/status/",
+        BulkAuditEntryStatusView.as_view(),
+        name="bulk-audit-entry-status",
+    ),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),
     path("models/search/", ModelSearchView.as_view(), name="model-search"),

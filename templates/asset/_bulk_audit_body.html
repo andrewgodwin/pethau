@@ -1,0 +1,85 @@
+<div id="bulk-audit-body">
+    {% if error %}
+    <div class="bulk-audit-error">{{ error }}</div>
+    {% endif %}
+
+    <form
+        class="actions tag-entry-form"
+        hx-post="{% url 'bulk-audit-add' %}"
+        hx-target="#bulk-audit-body"
+        hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        <input
+            type="text"
+            id="bulk-audit-tag-input"
+            name="tag"
+            placeholder="{% if location %}Scan or type an asset tag…{% else %}Pick a location above first…{% endif %}"
+            autocomplete="off"
+            autofocus
+            {% if not location %}disabled{% endif %}
+        />
+        <button type="button" class="placeholder-icon" disabled title="Barcode scanning coming soon">
+            <i class="fas fa-barcode"></i>
+        </button>
+        <span class="spacer"></span>
+        <button type="submit" class="main" {% if not location %}disabled{% endif %}>Add</button>
+    </form>
+    <script>
+        (function () {
+            var input = document.getElementById("bulk-audit-tag-input");
+            if (input && !input.disabled) {
+                input.focus();
+            }
+        })();
+    </script>
+
+    <div class="item-list">
+        <div class="item-header">
+            <span class="item-thumb"></span>
+            <span class="col1">Tag / Name</span>
+            <span class="col2">Status</span>
+            <span class="item-actions"></span>
+        </div>
+        {% for entry in entries %}
+        <div class="item-entry {% cycle 'odd' 'even' %}">
+            <a href="{{ entry.asset.urls.view }}" class="item-thumb">
+                {% if entry.asset.image %}
+                <img src="{{ entry.asset.image.thumbnail_128.url }}" alt="">
+                {% else %}
+                <i class="fas fa-box"></i>
+                {% endif %}
+            </a>
+            <a href="{{ entry.asset.urls.view }}" class="col1">
+                {{ entry.asset.tag }}
+                {% if entry.asset.name %}
+                <small>{{ entry.asset.name }}</small>
+                {% endif %}
+            </a>
+            <span class="col2">
+                <select
+                    name="status"
+                    hx-post="{% url 'bulk-audit-entry-status' entry.pk %}"
+                    hx-target="#bulk-audit-body"
+                    hx-swap="outerHTML"
+                    hx-trigger="change"
+                >
+                    {% for value, display in status_choices %}
+                    <option value="{{ value }}" {% if value == entry.status %}selected{% endif %}>{{ display }}</option>
+                    {% endfor %}
+                </select>
+            </span>
+            <span class="item-actions">
+                <button type="button" class="placeholder-icon" disabled title="Photo capture coming soon">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </span>
+        </div>
+        {% endfor %}
+        {% if not entries %}
+        <div class="item-entry empty-list">
+            <span class="empty-value">No items scanned yet.</span>
+        </div>
+        {% endif %}
+    </div>
+</div>

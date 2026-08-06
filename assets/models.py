@@ -233,7 +233,7 @@ class AssetIdentifier(models.Model):
 
 class AssetHistory(models.Model):
     """
-    Tracks an asset's current checked-in/out status as well as audits.
+    Tracks an asset's current location and status.
     """
 
     STATUS_CHOICES: ClassVar[list[tuple[str, str]]] = [

@@ -172,21 +172,32 @@ body {
     cursor: pointer;
 }
 
+.actions .field-location label {
+    display: none;
+}
+
+.actions .field-location input {
+    width: 20rem;
+}
+
 .actions button[hidden] {
     display: none;
 }
 
-.actions a.delete {
+.actions a.delete,
+.actions button.delete {
     background: var(--delete-color);
     color: var(--delete-color-text);
 }
 
-.actions a.edit {
+.actions a.edit,
+.actions button.edit {
     background: var(--edit-color);
     color: var(--edit-color-text);
 }
 
-.actions a.audit {
+.actions a.audit,
+.actions button.audit {
     background: var(--audit-color);
     color: var(--audit-color-text);
 }
@@ -200,13 +211,21 @@ body {
     flex: 1 1 auto;
 }
 
-.actions a.main {
+.actions a.main,
+.actions button.main {
     background: var(--highlight-color);
     color: var(--highlight-color-text);
 }
 
-.actions a.main:hover {
+.actions a.main:hover,
+.actions button.main:hover {
     background: var(--highlight-color-hover);
+}
+
+.actions button:disabled,
+.actions input:disabled {
+    opacity: 50%;
+    cursor: not-allowed;
 }
 
 .actions.pagination a.disabled {
@@ -327,6 +346,12 @@ body {
 
 /* --- Search combo (searchable select) --- */
 
+.combo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
 .combo {
     display: inline;
     align-items: center;
@@ -407,6 +432,41 @@ dialog.model-modal::backdrop {
     background: rgba(0, 0, 0, 0.5);
 }
 
+/* --- Bulk audit --- */
+
+.tag-entry-form input[type="text"] {
+    flex: 1 1 auto;
+}
+
+.placeholder-icon {
+    opacity: 45%;
+    cursor: not-allowed !important;
+}
+
+.item-entry .item-actions .placeholder-icon {
+    background: var(--content-bar-item);
+    color: var(--content-bar-text);
+    padding: 0.3rem 0.3rem;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+.item-entry select {
+    background: var(--content-background);
+    color: var(--content-text);
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.3rem;
+}
+
+.bulk-audit-error {
+    color: #b00020;
+    background: var(--content-item-background);
+    border-radius: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+}
+
 /* --- General content --- */
 
 h1 {
@@ -465,7 +525,7 @@ h2.subtitle {
 }
 
 .item-header .col3 {
-    width: 8rem;
+    width: 10rem;
     display: none;
 }
 
@@ -477,7 +537,7 @@ h2.subtitle {
 .item-entry {
     display: flex;
     align-items: center;
-    padding: 0.3rem 0.5rem;
+    padding: 0.2rem 0.5rem;
     background: var(--content-item-background);
     border-radius: 0.3rem;
     min-height: 1.8rem;
@@ -517,10 +577,10 @@ h2.subtitle {
     font-size: 0.9rem;
 }
 
-.item-entry .name {
+.item-entry small {
     font-size: 80%;
     display: block;
-    margin: -0.2rem 0 0 0;
+    margin: -0.3rem 0 0 0;
 }
 
 .item-entry .col2 {
@@ -529,20 +589,19 @@ h2.subtitle {
 }
 
 .item-entry .col3 {
-    width: 8rem;
+    width: 10rem;
     display: none;
 }
 
 .item-entry .location {
-    display: block;
     color: var(--content-link);
     text-decoration: none;
-    font-size: 90%;
+    font-size: 105%;
 }
 
 .item-entry .location::before {
     content: "in ";
-    font-size: 80%;
+    font-size: 90%;
     color: var(--content-text);
 }
 

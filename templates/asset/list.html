@@ -34,11 +34,11 @@
         <span class="item-thumb"></span>
         <span class="col1">Tag / Name</span>
         <span class="col2">Status / Loc</span>
-        <span class="col3">Category</span>
+        <span class="col3">Model / Cat</span>
         <span class="item-actions">Actions</span>
     </div>
     {% for asset in assets %}
-    <div class="item-entry">
+    <div class="item-entry {% cycle 'odd' 'even' %}">
         <a href="{{ asset.urls.view }}" class="item-thumb">
             {% if asset.image %}
             <img src="{{ asset.image.thumbnail_128.url }}" alt="">
@@ -48,17 +48,20 @@
         </a>
         <a href="{{ asset.urls.view }}" class="col1">
             {{ asset.tag }}
-            <span class="name">{{ asset.name }}</span>
+            {% if asset.name %}
+                <small>{{ asset.name }}</small>
+            {% endif %}
         </a>
         <span class="col2">
             {% include "_status.html" with history=asset.current_history empty_text="unknown" %}
             {% if asset.current_history.location %}
-                <a class="location" href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location.name|default:asset.current_history.location.tag }}</a>
+                <small><a class="location" href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location.name|default:asset.current_history.location.tag }}</a></small>
             {% endif %}
         </span>
         <span class="col3">
+            {{ asset.model }}
             {% if asset.category %}
-                {{ asset.category }}
+                <small>{{ asset.category }}</small>
             {% endif %}
         </span>
         <span class="item-actions">

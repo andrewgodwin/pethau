@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Bulk Audit{% endblock title %}
+
+{% block content %}
+<h1>Bulk Audit</h1>
+
+<form method="post" action="{% url 'bulk-audit-location' %}">
+    {% csrf_token %}
+    <div class="actions">
+        {% include "asset/_location_field.html" with field=location_form.location exclude_pk="" current_value=location scan_placeholder=True %}
+        <div class="pure-controls">
+            <button type="submit" class="audit">Set Location</button>
+        </div>
+    </div>
+</form>
+
+{% include "asset/_bulk_audit_body.html" %}
+{% endblock content %}
