@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock title %}
+
+{% block page %}
+<div class="login-page">
+    <h1>Pethau</h1>
+    <form method="post" class="pure-form pure-form-stacked asset-form context-box login-form">
+        <h1>Log in</h1>
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <fieldset>
+            {% include "_field.html" with field=form.username label="Email" %}
+            {% include "_field.html" with field=form.password %}
+        </fieldset>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="footer">
+            <button type="submit" class="pure-button pure-button-primary">Log in</button>
+        </div>
+    </form>
+</div>
+{% endblock page %}

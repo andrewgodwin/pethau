@@ -15,6 +15,7 @@
         <title>{% block wholetitle %} {% block title %} {% endblock title %} - Pethau{% endblock wholetitle %}</title>
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% block page %}
         <div id="layout">
             <div class="top-menu pure-menu">
                 <a
@@ -71,11 +72,26 @@
                                 ><i class="fa-solid fa-boxes-packing fa-width-fixed"></i> Bulk Audit</a
                             >
                         </li>
+                        {% if user.is_staff %}
                         <li class="pure-menu-item">
                             <a href="/admin" class="pure-menu-link"
                                 ><i class="fa-solid fa-cog fa-width-fixed"></i> Admin</a
                             >
                         </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="pure-menu-item menu-item-divided">
+                            <span class="pure-menu-link"><i class="fa-solid fa-user fa-width-fixed"></i> {{ user.name }}</span>
+                        </li>
+                        <li class="pure-menu-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="pure-menu-link"
+                                    ><i class="fa-solid fa-right-from-bracket fa-width-fixed"></i> Logout</button
+                                >
+                            </form>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -84,6 +100,7 @@
                 <div class="content">{% block content %} {% endblock content %}</div>
             </div>
         </div>
+        {% endblock page %}
         <script>
             // Data-entry forms shouldn't submit when Enter
             // is pressed in one of their fields.

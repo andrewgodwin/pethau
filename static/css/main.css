@@ -112,6 +112,20 @@ body {
     color: #fff;
 }
 
+#menu button.pure-menu-link {
+    display: block;
+    width: 100%;
+    background: none;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+}
+
+#menu button.pure-menu-link:hover {
+    background: var(--sidebar-hover-bg);
+}
+
 #menu .pure-menu-heading {
     font-size: 110%;
     color: #fff;
@@ -246,6 +260,28 @@ body {
 .actions .pagination-status {
     color: var(--content-bar-text);
     opacity: 80%;
+}
+
+/* --- Bare centered pages (e.g. login) --- */
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--sidebar-background);
+}
+
+.login-page h1 {
+    display: block;
+}
+
+.login-page .login-form {
+    width: 100%;
+    max-width: 24rem;
+    margin: 0;
 }
 
 /* --- Context Boxes --- */

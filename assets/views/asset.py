@@ -14,13 +14,15 @@ from django.views.generic import (
 
 from assets.forms import AssetAuditForm, CreateAssetForm, EditAssetForm
 from assets.models import Asset, AssetHistory
+from assets.views.mixins import LoginAndPermissionRequiredMixin
 
 
-class AssetCreateView(FormView):
+class AssetCreateView(LoginAndPermissionRequiredMixin, FormView):
     """
     Create a new asset and its initial history entry.
     """
 
+    permission_required = "assets.add_asset"
     template_name = "asset/create.html"
     form_class = CreateAssetForm
     success_url = reverse_lazy("asset-list")
@@ -38,7 +40,8 @@ class AssetCreateView(FormView):
         return super().form_valid(form)
 
 
-class AssetListView(ListView):
+class AssetListView(LoginAndPermissionRequiredMixin, ListView):
+    permission_required = "assets.view_asset"
     model = Asset
     template_name = "asset/list.html"
     context_object_name = "assets"
@@ -63,13 +66,15 @@ class AssetListView(ListView):
         return context
 
 
-class AssetDetailView(DetailView):
+class AssetDetailView(LoginAndPermissionRequiredMixin, DetailView):
+    permission_required = "assets.view_asset"
     model = Asset
     template_name = "asset/detail.html"
     context_object_name = "asset"
 
 
-class AssetUpdateView(UpdateView):
+class AssetUpdateView(LoginAndPermissionRequiredMixin, UpdateView):
+    permission_required = "assets.change_asset"
     model = Asset
     form_class = EditAssetForm
     template_name = "asset/edit.html"
@@ -80,11 +85,12 @@ class AssetUpdateView(UpdateView):
         return response
 
 
-class AssetAuditView(CreateView):
+class AssetAuditView(LoginAndPermissionRequiredMixin, CreateView):
     """
     Records a new AssetHistory entry for an asset and makes it current.
     """
 
+    permission_required = "assets.add_assethistory"
     model = AssetHistory
     form_class = AssetAuditForm
     template_name = "asset/audit.html"
@@ -124,12 +130,13 @@ class AssetAuditView(CreateView):
         return context
 
 
-class AssetDeleteView(DeleteView):
+class AssetDeleteView(LoginAndPermissionRequiredMixin, DeleteView):
     """
     Soft-deletes an asset by setting its `deleted` timestamp rather than removing the
     row from the database.
     """
 
+    permission_required = "assets.delete_asset"
     model = Asset
     template_name = "asset/confirm_delete.html"
     success_url = reverse_lazy("asset-list")
@@ -142,12 +149,13 @@ class AssetDeleteView(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class AssetSearchView(ListView):
+class AssetSearchView(LoginAndPermissionRequiredMixin, ListView):
     """
     HTMX partial: returns a filtered, capped list of assets for the search-as-you-type
     combo box on the audit form's location field.
     """
 
+    permission_required = "assets.view_asset"
     model = Asset
     template_name = "asset/_search_options.html"
     context_object_name = "assets"

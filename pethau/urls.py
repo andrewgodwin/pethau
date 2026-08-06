@@ -18,6 +18,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 from django.views.generic import RedirectView
 
@@ -48,6 +49,8 @@ from assets.views.model import (
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="asset-list", permanent=False)),
+    path("login/", LoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
     path("assets/", AssetListView.as_view(), name="asset-list"),
     path("assets/new/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/search/", AssetSearchView.as_view(), name="asset-search"),

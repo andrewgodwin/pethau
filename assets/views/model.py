@@ -10,9 +10,11 @@ from django.views.generic import (
 
 from assets.forms import ModelForm
 from assets.models import Model
+from assets.views.mixins import LoginAndPermissionRequiredMixin
 
 
-class ModelListView(ListView):
+class ModelListView(LoginAndPermissionRequiredMixin, ListView):
+    permission_required = "assets.view_model"
     model = Model
     template_name = "model/list.html"
     context_object_name = "models"
@@ -37,13 +39,15 @@ class ModelListView(ListView):
         return context
 
 
-class ModelDetailView(DetailView):
+class ModelDetailView(LoginAndPermissionRequiredMixin, DetailView):
+    permission_required = "assets.view_model"
     model = Model
     template_name = "model/detail.html"
     context_object_name = "model"
 
 
-class ModelCreateView(CreateView):
+class ModelCreateView(LoginAndPermissionRequiredMixin, CreateView):
+    permission_required = "assets.add_model"
     model = Model
     form_class = ModelForm
     template_name = "model/form.html"
@@ -54,7 +58,8 @@ class ModelCreateView(CreateView):
         return response
 
 
-class ModelUpdateView(UpdateView):
+class ModelUpdateView(LoginAndPermissionRequiredMixin, UpdateView):
+    permission_required = "assets.change_model"
     model = Model
     form_class = ModelForm
     template_name = "model/form.html"
@@ -65,18 +70,20 @@ class ModelUpdateView(UpdateView):
         return response
 
 
-class ModelDeleteView(DeleteView):
+class ModelDeleteView(LoginAndPermissionRequiredMixin, DeleteView):
+    permission_required = "assets.delete_model"
     model = Model
     template_name = "model/confirm_delete.html"
     success_url = reverse_lazy("model-list")
 
 
-class ModelSearchView(ListView):
+class ModelSearchView(LoginAndPermissionRequiredMixin, ListView):
     """
     HTMX partial: returns a filtered, capped list of models for the search-as-you-type
     combo box on the asset form.
     """
 
+    permission_required = "assets.view_model"
     model = Model
     template_name = "model/_search_options.html"
     context_object_name = "models"
@@ -93,12 +100,13 @@ class ModelSearchView(ListView):
         return queryset[:20]
 
 
-class ModelQuickCreateView(CreateView):
+class ModelQuickCreateView(LoginAndPermissionRequiredMixin, CreateView):
     """
     HTMX partial: renders/handles the "+" popup form for creating a model without
     leaving the asset form.
     """
 
+    permission_required = "assets.add_model"
     model = Model
     form_class = ModelForm
     template_name = "model/_quick_create.html"

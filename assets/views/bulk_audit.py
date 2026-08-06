@@ -5,6 +5,7 @@ from django.views import View
 
 from assets.forms import BulkAuditLocationForm
 from assets.models import Asset, AssetHistory
+from assets.views.mixins import LoginAndPermissionRequiredMixin
 
 SESSION_KEY = "bulk_audit"
 
@@ -54,12 +55,14 @@ def _bulk_audit_context(state):
     }
 
 
-class BulkAuditView(View):
+class BulkAuditView(LoginAndPermissionRequiredMixin, View):
     """
     Main bulk-audit page.
 
     Lets user pick a location, then scan assets against it
     """
+
+    permission_required = "assets.add_assethistory"
 
     def get(self, request):
         state = _get_state(request)
@@ -71,12 +74,14 @@ class BulkAuditView(View):
         return render(request, "asset/bulk_audit.html", context)
 
 
-class BulkAuditSetLocationView(View):
+class BulkAuditSetLocationView(LoginAndPermissionRequiredMixin, View):
     """
     Sets the location for the current bulk-audit session.
 
     Audit page submits here, we set the location in the session, and then go back.
     """
+
+    permission_required = "assets.add_assethistory"
 
     def post(self, request):
         form = BulkAuditLocationForm(request.POST)
@@ -89,13 +94,15 @@ class BulkAuditSetLocationView(View):
         return HttpResponseRedirect(reverse("bulk-audit"))
 
 
-class BulkAuditAddEntryView(View):
+class BulkAuditAddEntryView(LoginAndPermissionRequiredMixin, View):
     """
     Records (or updates) an AssetHistory entry for a tag.
 
     The record is created immediately, and then the history for this session is stored
     in the state.
     """
+
+    permission_required = "assets.add_assethistory"
 
     def post(self, request):
         state = _get_state(request)
@@ -148,10 +155,12 @@ class BulkAuditAddEntryView(View):
         return render(request, "asset/_bulk_audit_body.html", context)
 
 
-class BulkAuditEntryStatusView(View):
+class BulkAuditEntryStatusView(LoginAndPermissionRequiredMixin, View):
     """
     Updates the status of a single entry recorded during the current bulk-audit session.
     """
+
+    permission_required = "assets.add_assethistory"
 
     def post(self, request, pk):
         state = _get_state(request)
