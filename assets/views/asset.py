@@ -156,13 +156,17 @@ class AssetSearchView(ListView):
         queryset = Asset.objects.filter(deleted__isnull=True).order_by("tag")
         query = self.request.GET.get("q", "").strip()
         if query:
+            filters = Q(name__icontains=query)
             if query.isdigit():
                 # A pure number is likely a shorthand for the numeric suffix of a
-                # tag (e.g. "03" for "AST00003"), so match on tag ending
-                tag_filter = Q(tag__iendswith=query)
+                # tag (e.g. "03" for "AER00003"), so match on tag ending rather
+                # than substring. Unlike find_by_tag(), this deliberately allows
+                # multiple results so the dropdown can keep narrowing as more
+                # digits are typed instead of going blank on ambiguity.
+                filters |= Q(tag__iendswith=query)
             else:
-                tag_filter = Q(tag__icontains=query)
-            queryset = queryset.filter(tag_filter | Q(name__icontains=query))
+                filters |= Q(tag__icontains=query)
+            queryset = queryset.filter(filters)
         exclude_pk = self.request.GET.get("exclude", "")
         if exclude_pk.isdigit():
             queryset = queryset.exclude(pk=exclude_pk)

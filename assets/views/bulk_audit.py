@@ -107,8 +107,8 @@ class BulkAuditAddEntryView(View):
         if not location:
             error = "Pick a location before adding assets." if tag else None
         elif tag:
-            # Try looking up tag by exact match
-            asset = Asset.objects.filter(tag__iexact=tag, deleted__isnull=True).first()
+            # Try looking up tag by exact match, falling back to a unique numeric suffix
+            asset = Asset.find_by_tag(tag)
             if asset is None:
                 if Asset.objects.filter(tag__iexact=tag).exists():
                     error = f"Asset '{tag}' has been deleted."

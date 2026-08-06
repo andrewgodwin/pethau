@@ -200,6 +200,23 @@ class Asset(models.Model):
                 return new_tag
         raise ValueError("Failed to generate unique tag")
 
+    @classmethod
+    def find_by_tag(cls, tag: str) -> "Asset | None":
+        """
+        Look up an active asset by exact tag match, falling back to a unique numeric
+        suffix match (e.g. "03" resolving to "AER00003") when nothing exact is found and
+        the given tag is purely digits.
+        """
+        tag = tag.strip()
+        asset = cls.objects.filter(tag__iexact=tag, deleted__isnull=True).first()
+        if asset is None and tag.isdigit():
+            matches = list(
+                cls.objects.filter(tag__iendswith=tag, deleted__isnull=True)[:2]
+            )
+            if len(matches) == 1:
+                asset = matches[0]
+        return asset
+
 
 class AssetIdentifier(models.Model):
     """
