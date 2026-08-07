@@ -39,6 +39,11 @@ class AssetCreateView(LoginAndPermissionRequiredMixin, FormView):
         asset.save(update_fields=["current_history"])
         return super().form_valid(form)
 
+    def get_success_url(self):
+        if "_addanother" in self.request.POST:
+            return reverse_lazy("asset-create")
+        return super().get_success_url()
+
 
 class AssetListView(LoginAndPermissionRequiredMixin, ListView):
     permission_required = "assets.view_asset"
