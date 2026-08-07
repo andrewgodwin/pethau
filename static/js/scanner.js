@@ -31,7 +31,17 @@
         scanner
             .start(
                 { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 250, height: 150 } },
+                {
+                    fps: 20,
+                    qrbox: { width: 280, height: 120 },
+                    formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
+                    videoConstraints: {
+                        facingMode: "environment",
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 },
+                    },
+                    experimentalFeatures: { useBarCodeDetectorIfSupported: true },
+                },
                 function (decodedText) {
                     stopActiveScanner();
                     dialog.close();
