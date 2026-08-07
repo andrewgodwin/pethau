@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Log in{% endblock title %}
 
 {% block page %}
 <div class="login-page">
-    <h1>Pethau</h1>
+    <img class="site-logo-login" src="{% static SITE_LOGO %}" alt="Pethau" />
     <form method="post" class="pure-form pure-form-stacked asset-form context-box login-form">
         <h1>Log in</h1>
 

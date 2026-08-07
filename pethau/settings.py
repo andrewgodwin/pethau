@@ -19,6 +19,9 @@ ASSET_TAG_PREFIX = env("ASSET_TAG_PREFIX")
 ASSET_TAG_DIGITS = env.int("ASSET_TAG_DIGITS")
 ASSET_CATEGORY_CHOICES = env.list("ASSET_CATEGORY_CHOICES")
 
+# Path (relative to STATICFILES_DIRS) to the site logo image
+SITE_LOGO = env("SITE_LOGO", default="images/logo.png")
+
 # Colours used for the status indicator dot, keyed by AssetHistory.STATUS_CHOICES value
 ASSET_STATUS_COLORS = env.dict(
     "ASSET_STATUS_COLORS",
@@ -70,6 +73,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "pethau.context_processors.site",
             ],
         },
     },
