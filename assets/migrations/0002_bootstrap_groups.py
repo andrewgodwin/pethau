@@ -50,7 +50,7 @@ def remove_groups(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("assets", "0004_owner_default"),
+        ("assets", "0001_initial"),
         ("auth", "0012_alter_user_first_name_max_length"),
     ]
 
