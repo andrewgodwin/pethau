@@ -185,6 +185,31 @@ class Asset(models.Model):
     def get_absolute_url(self):
         return self.urls.view
 
+    @property
+    def display_name(self):
+        """
+        Short display label: the asset's name if set, otherwise its tag.
+        """
+        return self.name or self.tag
+
+    def location_chain(self, max_levels=3):
+        """
+        This asset's location, followed by up to `max_levels - 1` further
+        parent/grandparent locations (the location's location, and so on).
+        """
+        chain = []
+        seen = {self.pk}
+        current = self.current_history.location if self.current_history_id else None
+        while current and len(chain) < max_levels:
+            if current.pk in seen:
+                break
+            chain.append(current)
+            seen.add(current.pk)
+            current = (
+                current.current_history.location if current.current_history_id else None
+            )
+        return chain
+
     @classmethod
     def next_tag(cls) -> str:
         prefix = settings.ASSET_TAG_PREFIX

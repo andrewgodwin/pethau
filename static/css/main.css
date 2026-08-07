@@ -726,6 +726,15 @@ h2.subtitle {
     vertical-align: -0.05rem;
 }
 
+.location-parent {
+    color: var(--content-text);
+}
+
+.location-separator {
+    color: var(--content-text);
+    font-size: 90%;
+}
+
 .image-gallery {
     display: flex;
     flex-wrap: wrap;

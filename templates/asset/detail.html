@@ -26,11 +26,15 @@
 
         <div class="title pure-u-1 pure-u-md-1-4">Location</div>
         <div class="value pure-u-1 pure-u-md-2-3">
-            {% if asset.current_history.location %}
-                <a href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location }}</a>
+            {% with location_chain=asset.location_chain %}
+            {% if location_chain %}
+                {% for location in location_chain %}
+                    <a href="{{ location.urls.view }}" class="location-parent">{{ location.display_name }}</a>{% if not forloop.last %} <span class="location-separator">›</span> {% endif %}
+                {% endfor %}
             {% else %}
                 <span class="empty-value">(none)</span>
             {% endif %}
+            {% endwith %}
         </div>
 
         {% if asset.name %}
