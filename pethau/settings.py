@@ -145,6 +145,6 @@ if AWS_STORAGE_BUCKET_NAME:
     }
 else:
     MEDIA_URL = "media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_ROOT = env("MEDIA_ROOT", default=BASE_DIR / "media")
 
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
