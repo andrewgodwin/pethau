@@ -68,9 +68,30 @@
                 </select>
             </span>
             <span class="item-actions">
-                <button type="button" class="placeholder-icon" disabled title="Photo capture coming soon">
+                {% for image in entry.images.all %}
+                <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="photo-thumb">
+                    <img src="{{ image.thumbnail_128.url }}" alt="">
+                </a>
+                {% endfor %}
+                <label
+                    class="photo-upload"
+                    for="bulk-audit-photo-{{ entry.pk }}"
+                    title="{% if entry.images.count %}Add another photo{% else %}Add photo{% endif %}"
+                >
                     <i class="fas fa-camera"></i>
-                </button>
+                </label>
+                <input
+                    type="file"
+                    id="bulk-audit-photo-{{ entry.pk }}"
+                    name="photo"
+                    accept="image/*"
+                    capture="environment"
+                    hx-post="{% url 'bulk-audit-entry-photo' entry.pk %}"
+                    hx-target="#bulk-audit-body"
+                    hx-swap="outerHTML"
+                    hx-trigger="change"
+                    hx-encoding="multipart/form-data"
+                />
                 <button
                     type="button"
                     class="delete"

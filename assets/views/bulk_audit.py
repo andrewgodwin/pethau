@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import View
 
 from assets.forms import BulkAuditLocationForm
-from assets.models import Asset, AssetHistory
+from assets.models import Asset, AssetHistory, Image
 from assets.views.mixins import LoginAndPermissionRequiredMixin
 
 SESSION_KEY = "bulk_audit"
@@ -38,9 +38,9 @@ def _bulk_audit_context(state):
     history_ids = list(state.get("entries", {}).values())
     histories_by_id = {
         history.pk: history
-        for history in AssetHistory.objects.filter(pk__in=history_ids).select_related(
-            "asset", "asset__image", "location"
-        )
+        for history in AssetHistory.objects.filter(pk__in=history_ids)
+        .select_related("asset", "asset__image", "location")
+        .prefetch_related("images")
     }
     entries = [
         histories_by_id[history_id]
@@ -170,6 +170,28 @@ class BulkAuditEntryStatusView(LoginAndPermissionRequiredMixin, View):
         status = request.POST.get("status", "")
         if status in dict(AssetHistory.STATUS_CHOICES):
             AssetHistory.objects.filter(pk=pk).update(status=status)
+
+        context = _bulk_audit_context(state)
+        return render(request, "asset/_bulk_audit_body.html", context)
+
+
+class BulkAuditEntryPhotoView(LoginAndPermissionRequiredMixin, View):
+    """
+    Attaches a captured/uploaded photo to an entry recorded during the current bulk-
+    audit session.
+    """
+
+    permission_required = "assets.add_assethistory"
+
+    def post(self, request, pk):
+        state = _get_state(request)
+        if pk not in state.get("entries", {}).values():
+            return HttpResponseNotFound()
+
+        uploaded = request.FILES.get("photo")
+        if uploaded:
+            image = Image.objects.create(image=uploaded)
+            AssetHistory.objects.get(pk=pk).images.add(image)
 
         context = _bulk_audit_context(state)
         return render(request, "asset/_bulk_audit_body.html", context)

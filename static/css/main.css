@@ -662,8 +662,16 @@ h2.subtitle {
 
 .item-header .item-actions,
 .item-entry .item-actions {
-    width: 7rem;
+    min-width: 7rem;
     text-align: right;
+}
+
+.item-entry .item-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem 0;
 }
 
 .item-entry {
@@ -736,10 +744,54 @@ h2.subtitle {
 
 .item-entry .item-actions button {
     border: none;
-    padding: 0.3rem 0.3rem;
+    width: 2.2rem;
+    height: 2.2rem;
     border-radius: var(--radius);
     cursor: pointer;
-    margin-left: 0.3rem;
+}
+
+.item-entry .item-actions input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.item-entry .item-actions label.photo-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--content-bar-item);
+    color: var(--content-bar-text);
+    width: 2.2rem;
+    height: 2.2rem;
+    margin: 0 0.4rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.item-entry .item-actions label.photo-upload:hover {
+    background-image: var(--hover-overlay);
+}
+
+.item-entry .item-actions .photo-thumb {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: none;
+}
+
+.item-entry .item-actions .photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .item-entry.empty-list {
