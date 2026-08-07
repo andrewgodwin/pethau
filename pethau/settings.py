@@ -140,6 +140,7 @@ if AWS_STORAGE_BUCKET_NAME:
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_AUTH = env.bool("AWS_QUERYSTRING_AUTH", default=False)
+    AWS_S3_FILE_OVERWRITE = False
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3.S3Storage",
     }
