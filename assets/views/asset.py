@@ -77,6 +77,15 @@ class AssetDetailView(LoginAndPermissionRequiredMixin, DetailView):
     template_name = "asset/detail.html"
     context_object_name = "asset"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["histories"] = (
+            self.object.histories.select_related("location")
+            .prefetch_related("images")
+            .order_by("-when")
+        )
+        return context
+
 
 class AssetUpdateView(LoginAndPermissionRequiredMixin, UpdateView):
     permission_required = "assets.change_asset"

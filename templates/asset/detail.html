@@ -67,4 +67,48 @@
     {% endif %}
 </div>
 
+<h2>History</h2>
+
+<div class="item-list small-col1">
+    <div class="item-header">
+        <span class="item-thumb"></span>
+        <span class="col1">When</span>
+        <span class="col2">Status/Loc</span>
+        <span class="item-actions">Images</span>
+    </div>
+    {% for history in histories %}
+    <div class="item-entry {% cycle 'odd' 'even' %}">
+        <a href="{{ history.images.first.image.url }}" class="item-thumb">
+            {% if history.images.exists %}
+                <img src="{{ history.images.first.thumbnail_128.url }}" alt="">
+            {% else %}
+                <i class="fas fa-clipboard-check"></i>
+            {% endif %}
+        </a>
+        <span class="col1">
+            {{ history.when|date:"Y-m-d H:i" }}
+            <small>{{ history.when|timesince }} ago</small>
+        </span>
+        <span class="col2">
+            {% include "_status.html" with history=asset.current_history empty_text="unknown" %}
+            {% if asset.current_history.location %}
+                <small><a class="location" href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location.name|default:asset.current_history.location.tag }}</a></small>
+            {% endif %}
+        </span>
+        <span class="item-actions">
+            {% for image in history.images.all|slice:"1:" %}
+            <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="photo-thumb">
+                <img src="{{ image.thumbnail_128.url }}" alt="">
+            </a>
+            {% endfor %}
+        </span>
+    </div>
+    {% endfor %}
+    {% if not histories %}
+    <div class="item-entry empty-list">
+        <span class="empty-value">No audit history yet.</span>
+    </div>
+    {% endif %}
+</div>
+
 {% endblock content %}
