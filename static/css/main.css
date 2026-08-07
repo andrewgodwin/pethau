@@ -140,7 +140,7 @@ body {
     background: var(--sidebar-background);
     color: var(--sidebar-text);
     font-size: 2rem;
-    padding: 0 0.5rem;
+    padding: env(safe-area-inset-top) 0.5rem 0 0.5rem;
 }
 
 .top-menu a {
