@@ -4,7 +4,7 @@ import urlman
 from django.conf import settings
 from django.db import models
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFit
+from imagekit.processors import ResizeToFit, Transpose
 
 
 def asset_category_choices():
@@ -19,13 +19,13 @@ class Image(models.Model):
 
     thumbnail_128 = ImageSpecField(
         source="image",
-        processors=[ResizeToFit(128, 128)],
+        processors=[Transpose(Transpose.AUTO), ResizeToFit(128, 128)],
         format="JPEG",
         options={"quality": 80},
     )
     thumbnail_512 = ImageSpecField(
         source="image",
-        processors=[ResizeToFit(512, 512)],
+        processors=[Transpose(Transpose.AUTO), ResizeToFit(512, 512)],
         format="JPEG",
         options={"quality": 90},
     )
