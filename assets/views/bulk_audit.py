@@ -173,3 +173,31 @@ class BulkAuditEntryStatusView(LoginAndPermissionRequiredMixin, View):
 
         context = _bulk_audit_context(state)
         return render(request, "asset/_bulk_audit_body.html", context)
+
+
+class BulkAuditEntryUndoView(LoginAndPermissionRequiredMixin, View):
+    """
+    Undoes a mis-scanned entry from the current bulk-audit session: deletes the
+    AssetHistory row it created, and recalculates the asset's current_history from
+    whatever history remains.
+    """
+
+    permission_required = "assets.add_assethistory"
+
+    def post(self, request, pk):
+        state = _get_state(request)
+        entries = state.get("entries", {})
+        if pk not in entries.values():
+            return HttpResponseNotFound()
+
+        history = AssetHistory.objects.filter(pk=pk).select_related("asset").first()
+        if history is not None:
+            asset = history.asset
+            history.delete()
+            asset.current_history = asset.histories.order_by("-when", "-pk").first()
+            asset.save(update_fields=["current_history"])
+            entries.pop(str(asset.pk), None)
+            _save_state(request, state)
+
+        context = _bulk_audit_context(state)
+        return render(request, "asset/_bulk_audit_body.html", context)

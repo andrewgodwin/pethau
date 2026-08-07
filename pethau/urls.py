@@ -35,6 +35,7 @@ from assets.views.asset import (
 from assets.views.bulk_audit import (
     BulkAuditAddEntryView,
     BulkAuditEntryStatusView,
+    BulkAuditEntryUndoView,
     BulkAuditSetLocationView,
     BulkAuditView,
 )
@@ -70,6 +71,11 @@ urlpatterns = [
         "bulk-audit/entries/<int:pk>/status/",
         BulkAuditEntryStatusView.as_view(),
         name="bulk-audit-entry-status",
+    ),
+    path(
+        "bulk-audit/entries/<int:pk>/undo/",
+        BulkAuditEntryUndoView.as_view(),
+        name="bulk-audit-entry-undo",
     ),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),
