@@ -32,12 +32,12 @@ class Avery5160(SheetLabelTemplate):
     rows = 10
     label_width = 2.625 * inch
     label_height = 1.0 * inch
-    margin_left = 0.1875 * inch
-    margin_top = 0.5 * inch
+    margin_left = 0.23 * inch
+    margin_top = 0.55 * inch
     pitch_x = 2.75 * inch
     pitch_y = 1.0 * inch
 
-    padding = 4
+    padding = 5
     barcode_height = 26
     qr_size = 33
 
@@ -63,7 +63,7 @@ class Avery5160(SheetLabelTemplate):
             canvas,
             asset_url(asset),
             x + width - pad - self.qr_size,
-            y + pad,
+            y + pad + 2,
             self.qr_size,
         )
 
