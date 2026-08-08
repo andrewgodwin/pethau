@@ -357,21 +357,37 @@ body {
 }
 
 .context-box label {
-    margin-bottom: -0.2rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.1rem;
 }
 
 .context-box input[type="text"],
 .context-box textarea,
 .context-box select {
     width: 100%;
-    max-width: 32rem;
+    background: var(--content-background);
+    color: var(--content-text);
+}
+
+.context-box input[type="file"] {
+    width: 100%;
+    line-height: 2rem;
+}
+
+/* The row is layout only — the field background belongs to .combo, so the action
+   button beside it keeps sitting on the panel rather than on a white block. */
+.context-box .combo-row {
+    width: 100%;
+}
+
+.context-box .combo {
     background: var(--content-background);
     color: var(--content-text);
 }
 
 .context-box legend {
     margin: -0.4rem 0 -0.4rem 0;
-    padding-left: 11.5rem;
+    padding-left: 2rem;
     border-bottom: 0;
     text-transform: uppercase;
     font-weight: bold;
@@ -383,10 +399,6 @@ body {
     margin: 0.3rem 0 0.4rem 0;
     padding-left: 11.5rem;
     flex-direction: row;
-}
-
-.context-box .pure-control-group {
-    margin: 0 0 0.3rem 0;
 }
 
 .context-box .error {
@@ -417,9 +429,10 @@ body {
 /* --- Search combo (searchable select) --- */
 
 .combo-row {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    width: 100%;
 }
 
 .combo {
@@ -448,11 +461,6 @@ body {
     border: 1px solid var(--content-bar-item);
     border-radius: var(--radius);
     z-index: 10;
-}
-
-/* Leave room for the "+" button that sits to the right of the model combo */
-.model-combo .combo-options {
-    right: 2.4rem;
 }
 
 .combo-options:empty {
@@ -942,6 +950,22 @@ Hides the menu at `48rem`, but modify this based on your app's needs.
 
     #menu {
         left: var(--menu-width);
+    }
+
+    .context-box label {
+        margin-top: 0.5rem;
+        padding-right: 0.7rem;
+        text-align: right;
+        box-sizing: border-box;
+        line-height: 1.3rem;
+    }
+
+    .context-box legend {
+        padding-left: 20%;
+    }
+
+    .context-box .pure-control-group {
+        margin: 0 0 0.3rem 0;
     }
 
     .top-menu {

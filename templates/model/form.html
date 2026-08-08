@@ -3,7 +3,7 @@
 {% block title %}{% if object %}Edit {{ object }}{% else %}New Model{% endif %}{% endblock title %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned model-form context-box">
+<form method="post" enctype="multipart/form-data" class="pure-form model-form context-box">
     <h1>{% if object %}Edit {{ object }}{% else %}New Model{% endif %}</h1>
 
     {% csrf_token %}

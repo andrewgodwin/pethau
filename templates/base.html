@@ -117,7 +117,7 @@
             document.addEventListener("keydown", function (e) {
                 if (e.key !== "Enter") return;
                 if (e.target.tagName !== "INPUT") return;
-                if (e.target.closest(".pure-form-aligned")) {
+                if (e.target.closest(".asset-form")) {
                     e.preventDefault();
                 }
             });
