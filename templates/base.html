@@ -103,6 +103,14 @@
             </div>
         </div>
         {% endblock page %}
+
+        <dialog id="lightbox" class="lightbox">
+            <button type="button" class="lightbox-close" aria-label="Close">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <img class="lightbox-image" alt="" />
+        </dialog>
+
         <script>
             // Data-entry forms shouldn't submit when Enter
             // is pressed in one of their fields.
@@ -116,5 +124,6 @@
         </script>
         <script src="{% static 'js/combo.js' %}"></script>
         <script src="{% static 'js/scanner.js' %}"></script>
+        <script src="{% static 'js/lightbox.js' %}"></script>
     </body>
 </html>

@@ -69,7 +69,7 @@
             </span>
             <span class="item-actions">
                 {% for image in entry.images.all %}
-                <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="photo-thumb">
+                <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="image-thumb">
                     <img src="{{ image.thumbnail_128.url }}" alt="">
                 </a>
                 {% endfor %}

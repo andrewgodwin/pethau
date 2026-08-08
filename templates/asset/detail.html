@@ -60,7 +60,7 @@
 
     {% if asset.image %}
     <div class="image-gallery pure-u-1 pure-u-md-1-3">
-        <a href="{{ asset.image.image.url }}" class="image-thumb">
+        <a href="{{ asset.image.image.url }}" target="_blank" rel="noopener" class="image-thumb">
             <img src="{{ asset.image.thumbnail_512.url }}" alt="{{ asset.image.title|default:'' }}">
         </a>
     </div>
@@ -82,9 +82,9 @@
             <small><a class="location" href="{{ history.location.urls.view }}">{{ history.location.name|default:history.location.tag }}</a></small>
             {% endif %}
         </div>
-        <div class="pure-u-1">
+        <div class="pure-u-1 history-images">
             {% for image in history.images.all %}
-            <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="photo-thumb">
+            <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="image-thumb">
                 <img src="{{ image.thumbnail_128.url }}" alt="">
             </a>
             {% endfor %}

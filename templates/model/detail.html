@@ -38,7 +38,7 @@
 
 {% if model.image %}
 <div class="image-gallery">
-    <a href="{{ model.image.image.url }}" class="image-thumb">
+    <a href="{{ model.image.image.url }}" target="_blank" rel="noopener" class="image-thumb">
         <img src="{{ model.image.thumbnail_128.url }}" alt="{{ model.image.title|default:'' }}">
     </a>
 </div>
