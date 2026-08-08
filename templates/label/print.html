@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Labels{% endblock title %}
+
+{% block content %}
+<form method="get" action="{% url 'label-output' %}" target="_blank" class="pure-form label-form context-box">
+    <h1>Print labels</h1>
+
+    <fieldset>
+        {% include "_field.html" with field=form.spec %}
+        {% include "_field.html" with field=form.template %}
+        <div class="field-offset-wrapper">{% include "_field.html" with field=form.offset %}</div>
+    </fieldset>
+
+    <div id="label-resolve">{% include "label/_resolve.html" %}</div>
+</form>
+<script>
+    (function () {
+        var form = document.currentScript.previousElementSibling;
+        var select = form.querySelector("select[name='template']");
+        var offset = form.querySelector(".field-offset-wrapper");
+
+        function sync() {
+            offset.hidden = select.selectedOptions[0].dataset.supportsOffset !== "1";
+        }
+        select.addEventListener("change", sync);
+        sync();
+    })();
+</script>
+{% endblock content %}

@@ -126,6 +126,32 @@ class ViewAccessControlTests(TestCase):
         response = self.client.get(reverse("bulk-audit"))
         self.assertEqual(response.status_code, 200)
 
+    def test_label_print_anonymous_redirected(self):
+        """
+        The label printing page also requires login.
+        """
+        response = self.client.get(reverse("label-print"))
+        self.assertRedirects(
+            response, f"{reverse('login')}?next={reverse('label-print')}"
+        )
+
+    def test_label_print_without_permission_forbidden(self):
+        """
+        Logged-in users who can't view assets can't print labels for them.
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("label-print"))
+        self.assertEqual(response.status_code, 403)
+
+    def test_label_print_with_permission_allowed(self):
+        """
+        The label printing page is reachable once the user can view assets.
+        """
+        self.grant("view_asset")
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("label-print"))
+        self.assertEqual(response.status_code, 200)
+
 
 class BootstrapGroupsTests(TestCase):
     def test_full_access_group_has_all_permissions(self):

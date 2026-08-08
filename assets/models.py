@@ -176,6 +176,7 @@ class Asset(models.Model):
         edit = "{view}edit/"
         audit = "{view}audit/"
         delete = "{view}delete/"
+        labels = "/labels/?spec={self.tag}"
 
     def __str__(self):
         if self.name:
@@ -220,7 +221,7 @@ class Asset(models.Model):
         else:
             highest_number = 0
         for i in range(100):
-            new_tag = f"{prefix}{str(highest_number + i + 1).zfill(5)}"
+            new_tag = f"{prefix}{str(highest_number + i + 1).zfill(settings.ASSET_TAG_DIGITS)}"
             if not cls.objects.filter(tag=new_tag).exists():
                 return new_tag
         raise ValueError("Failed to generate unique tag")

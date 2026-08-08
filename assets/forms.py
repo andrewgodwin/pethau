@@ -1,5 +1,7 @@
 from django import forms
+from django.urls import reverse
 
+from assets.labels import TEMPLATES, template_choices
 from assets.models import Asset, AssetHistory, Image, Model, Owner
 
 
@@ -162,3 +164,61 @@ class ModelForm(SingleImageMixin, forms.ModelForm):
         # Ensure empty values are treated as None (for uniqueness)
         self.fields["manufacturer"].empty_value = None
         self.fields["short_name"].empty_value = None
+
+
+class TemplateSelect(forms.Select):
+    """
+    A template picker that tags each option with the template's format and whether it
+    takes a sheet offset, so the page can show or hide fields to match.
+    """
+
+    def create_option(self, name, value, *args, **kwargs):
+        option = super().create_option(name, value, *args, **kwargs)
+        template = TEMPLATES.get(str(value))
+        if template:
+            option["attrs"]["data-format"] = template.format
+            option["attrs"]["data-supports-offset"] = (
+                "1" if template.supports_offset else "0"
+            )
+        return option
+
+
+class LabelPrintForm(forms.Form):
+    """
+    Form for the label printing page: which assets, which template, and how many labels
+    to skip on a part-used sheet.
+    """
+
+    spec = forms.CharField(
+        label="Assets",
+        required=False,
+        widget=forms.Textarea(
+            attrs={"rows": 3, "autofocus": True, "autocomplete": "off"}
+        ),
+        help_text="Tags separated by commas or spaces. Use 123-125 for a range and 345x2 (or 345#2) for copies.",
+    )
+    template = forms.ChoiceField(
+        label="Template", choices=template_choices, widget=TemplateSelect
+    )
+    offset = forms.IntegerField(
+        label="Skip labels",
+        required=False,
+        min_value=0,
+        max_value=999,
+        help_text="Leave this many labels blank at the start, to reuse a part-used sheet.",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Every field re-resolves the preview as it changes
+        for name, field in self.fields.items():
+            field.widget.attrs.update(
+                {
+                    "hx-get": reverse("label-resolve"),
+                    "hx-target": "#label-resolve",
+                    "hx-include": "closest form",
+                    "hx-trigger": (
+                        "input changed delay:400ms" if name == "spec" else "change"
+                    ),
+                }
+            )

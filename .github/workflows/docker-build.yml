@@ -18,6 +18,7 @@ jobs:
       ASSET_TAG_PREFIX: AER
       ASSET_TAG_DIGITS: "5"
       ASSET_CATEGORY_CHOICES: Storage,Supplies,Machine
+      SITE_URL: https://pethau.example.com
     steps:
       - uses: actions/checkout@v4
 

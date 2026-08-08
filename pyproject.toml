@@ -15,6 +15,7 @@ dependencies = [
     "django-storages[s3]>=1.14.6",
     "gunicorn>=26.0.0",
     "pre-commit>=4.6.1",
+    "reportlab>=4.4.4",
     "urlman>=2.0.3",
     "whitenoise>=6.12.0",
 ]

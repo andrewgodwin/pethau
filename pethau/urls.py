@@ -40,6 +40,7 @@ from assets.views.bulk_audit import (
     BulkAuditSetLocationView,
     BulkAuditView,
 )
+from assets.views.labels import LabelOutputView, LabelPrintView, LabelResolveView
 from assets.views.model import (
     ModelCreateView,
     ModelDeleteView,
@@ -83,6 +84,9 @@ urlpatterns = [
         BulkAuditEntryPhotoView.as_view(),
         name="bulk-audit-entry-photo",
     ),
+    path("labels/", LabelPrintView.as_view(), name="label-print"),
+    path("labels/resolve/", LabelResolveView.as_view(), name="label-resolve"),
+    path("labels/output/", LabelOutputView.as_view(), name="label-output"),
     path("models/", ModelListView.as_view(), name="model-list"),
     path("models/new/", ModelCreateView.as_view(), name="model-create"),
     path("models/search/", ModelSearchView.as_view(), name="model-search"),

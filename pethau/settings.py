@@ -22,6 +22,9 @@ ASSET_CATEGORY_CHOICES = env.list("ASSET_CATEGORY_CHOICES")
 # Path (relative to STATICFILES_DIRS) to the site logo image
 SITE_LOGO = env("SITE_LOGO", default="images/logo.png")
 
+# Absolute base URL of this site, used to build the URLs encoded into label QR codes
+SITE_URL = env("SITE_URL", default="http://localhost:8000").rstrip("/")
+
 # Colours used for the status indicator dot, keyed by AssetHistory.STATUS_CHOICES value
 ASSET_STATUS_COLORS = env.dict(
     "ASSET_STATUS_COLORS",

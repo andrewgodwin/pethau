@@ -1,0 +1,63 @@
+{% if spec.errors %}
+<ul class="errorlist">
+    {% for error in spec.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% for notice in spec.notices %}
+<p class="help-text label-notice"><i class="fas fa-circle-info"></i> {{ notice }}</p>
+{% endfor %}
+
+<div class="item-list">
+    <div class="item-header">
+        <span class="col1">Tag / Name</span>
+        <span class="col2">Model</span>
+        <span class="col3">Location</span>
+        <span class="item-actions">Copies</span>
+    </div>
+    {% for item in spec.items %}
+    <div class="item-entry {% cycle 'odd' 'even' %}">
+        <a href="{{ item.asset.urls.view }}" class="col1" target="_blank">
+            {{ item.asset.tag }}
+            {% if item.asset.name %}
+                <small>{{ item.asset.name }}</small>
+            {% endif %}
+        </a>
+        <span class="col2">{{ item.asset.model }}</span>
+        <span class="col3">
+            {% if item.asset.current_history.location %}
+                {{ item.asset.current_history.location.display_name }}
+            {% else %}
+                <span class="empty-value">unknown</span>
+            {% endif %}
+        </span>
+        <span class="item-actions">&times;{{ item.quantity }}</span>
+    </div>
+    {% empty %}
+    <div class="item-entry empty-list">
+        <span class="empty-value">Nothing selected yet.</span>
+    </div>
+    {% endfor %}
+</div>
+
+{% if zpl_preview %}
+<label class="label-zpl-title" for="label-zpl">ZPL for {{ spec.total }} label{{ spec.total|pluralize }}</label>
+<pre id="label-zpl" class="label-zpl">{{ zpl_preview }}</pre>
+{% endif %}
+
+<div class="footer">
+    {% if template.format == "zpl" %}
+    <button type="submit" name="download" value="1" formtarget="_self" class="pure-button pure-button-primary"
+        {% if not spec.is_printable %}disabled{% endif %}>Download .zpl</button>
+    {% else %}
+    <button type="submit" class="pure-button pure-button-primary"
+        {% if not spec.is_printable %}disabled{% endif %}>Print</button>
+    {% endif %}
+    <span class="label-total">
+        {% if spec.is_printable %}
+            {{ spec.total }} label{{ spec.total|pluralize }} on {{ template.name }}
+        {% endif %}
+    </span>
+</div>
