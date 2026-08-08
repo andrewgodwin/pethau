@@ -83,7 +83,7 @@
             {% endif %}
         </div>
         <div class="pure-u-1">
-            {% for image in history.images.all|slice:"1:" %}
+            {% for image in history.images.all %}
             <a href="{{ image.image.url }}" target="_blank" rel="noopener" class="photo-thumb">
                 <img src="{{ image.thumbnail_128.url }}" alt="">
             </a>
