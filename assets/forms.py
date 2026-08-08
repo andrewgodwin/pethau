@@ -141,12 +141,33 @@ class AssetAuditForm(forms.ModelForm):
 class BulkAuditLocationForm(forms.Form):
     """
     Form for picking the location to bulk-audit against.
+
+    The combo box posts the chosen asset's pk in `location`, but submitting straight
+    from a barcode scan (or an Enter press before the dropdown has caught up) leaves
+    only the raw text of the search box in `q`, so that is resolved to an asset here.
     """
 
     location = forms.ModelChoiceField(
         queryset=Asset.objects.filter(deleted__isnull=True).order_by("tag"),
         widget=forms.HiddenInput,
+        required=False,
     )
+    q = forms.CharField(required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get("location"):
+            return cleaned_data
+        tag = cleaned_data.get("q", "").strip()
+        if not tag:
+            self.add_error("location", "Pick or scan a location.")
+        else:
+            asset = Asset.find_by_tag(tag)
+            if asset is None:
+                self.add_error("location", f"No asset found with tag '{tag}'.")
+            else:
+                cleaned_data["location"] = asset
+        return cleaned_data
 
 
 class ModelForm(SingleImageMixin, forms.ModelForm):

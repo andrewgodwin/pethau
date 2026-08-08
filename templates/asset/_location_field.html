@@ -2,7 +2,7 @@
     <label class="pure-u-1 pure-u-md-1-5" for="{{ field.id_for_label }}">{{ label|default:"Location" }}</label>
     <div class="pure-u-1 pure-u-md-3-4">
         <div class="combo-row">
-            <div class="combo">
+            <div class="combo" {% if submit_on_select %}data-submit-on-select="1"{% endif %}>
                 <input
                     type="text"
                     id="{{ field.id_for_label }}-search"
@@ -10,7 +10,7 @@
                     name="q"
                     autocomplete="off"
                     placeholder="Search assets…"
-                    value="{{ current_value.tag|default:'' }}"
+                    value="{% firstof search_value current_value.tag '' %}"
                     hx-get="{% url 'asset-search' %}?exclude={{ exclude_pk }}"
                     hx-trigger="input changed delay:200ms, focus"
                     hx-target="next .combo-options"
@@ -22,7 +22,7 @@
                 <div class="combo-options"></div>
             </div>
             {% if scan_placeholder %}
-            {% include "_barcode_scanner.html" with target=field.id_for_label|add:"-search" %}
+            {% include "_barcode_scanner.html" with target=field.id_for_label|add:"-search" submit_on_scan=submit_on_scan %}
             {% endif %}
         </div>
         {% for error in field.errors %}

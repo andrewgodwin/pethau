@@ -19,7 +19,7 @@
             autofocus
             {% if not location %}disabled{% endif %}
         />
-        {% include "_barcode_scanner.html" with target="bulk-audit-tag-input" %}
+        {% include "_barcode_scanner.html" with target="bulk-audit-tag-input" submit_on_scan=True %}
         <span class="spacer"></span>
         <button type="submit" class="main" {% if not location %}disabled{% endif %}>Add</button>
     </form>

@@ -91,7 +91,15 @@ class BulkAuditSetLocationView(LoginAndPermissionRequiredMixin, View):
             # Clear every time, even if it's same location
             state["entries"] = {}
             _save_state(request, state)
-        return HttpResponseRedirect(reverse("bulk-audit"))
+            return HttpResponseRedirect(reverse("bulk-audit"))
+        # Scanning (or hitting Enter) can submit a tag that doesn't resolve, so redraw
+        # the page with the form's errors rather than silently bouncing back.
+        state = _get_state(request)
+        context = _bulk_audit_context(state)
+        _save_state(request, state)
+        context["location_form"] = form
+        context["location_search"] = request.POST.get("q", "")
+        return render(request, "asset/bulk_audit.html", context)
 
 
 class BulkAuditAddEntryView(LoginAndPermissionRequiredMixin, View):

@@ -50,6 +50,11 @@
                         input.value = decodedText;
                         input.dispatchEvent(new Event("input", { bubbles: true }));
                         input.dispatchEvent(new Event("change", { bubbles: true }));
+                        // On the bulk-audit forms a scan is the whole action, so submit
+                        // straight away rather than making the user reach for a button.
+                        if (trigger.dataset.submitOnScan && input.form) {
+                            input.form.requestSubmit();
+                        }
                     }
                 },
                 function () {

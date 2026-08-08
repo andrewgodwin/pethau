@@ -46,9 +46,24 @@
 
         search.addEventListener("keydown", function (e) {
             var list = items(combo);
-            if (!list.length) return;
             var current = highlighted(combo);
             var index = current ? Array.prototype.indexOf.call(list, current) : -1;
+
+            if (e.key === "Enter") {
+                e.preventDefault();
+                if (combo.dataset.submitOnSelect && search.form) {
+                    // Only take an option the user has explicitly arrowed onto: the
+                    // dropdown lags the typing, so the top option can still be a match
+                    // for an earlier prefix. Otherwise submit the raw text and let the
+                    // server resolve the tag exactly (which is how a scan gets in too).
+                    if (current) selectOption(combo, current);
+                    search.form.requestSubmit();
+                } else {
+                    selectOption(combo, current || list[0]);
+                }
+                return;
+            }
+            if (!list.length) return;
 
             if (e.key === "ArrowDown") {
                 e.preventDefault();
@@ -56,9 +71,6 @@
             } else if (e.key === "ArrowUp") {
                 e.preventDefault();
                 highlight(combo, list[Math.max(index - 1, 0)]);
-            } else if (e.key === "Enter") {
-                e.preventDefault();
-                selectOption(combo, current || list[0]);
             }
         });
 

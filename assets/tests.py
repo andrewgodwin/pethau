@@ -126,6 +126,35 @@ class ViewAccessControlTests(TestCase):
         response = self.client.get(reverse("bulk-audit"))
         self.assertEqual(response.status_code, 200)
 
+    def test_bulk_audit_location_by_scanned_tag(self):
+        """
+        Submitting the location form with only the search box's raw text (what a scan or
+        an Enter press before the dropdown resolves leaves behind) sets the location.
+        """
+        self.grant("add_assethistory")
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("bulk-audit-location"), {"location": "", "q": "AER00001"}
+        )
+        self.assertRedirects(response, reverse("bulk-audit"))
+        self.assertEqual(
+            self.client.session["bulk_audit"]["location_id"], self.asset.pk
+        )
+
+    def test_bulk_audit_location_with_unknown_tag_errors(self):
+        """
+        A tag that doesn't resolve redraws the page with an error rather than silently
+        doing nothing.
+        """
+        self.grant("add_assethistory")
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("bulk-audit-location"), {"location": "", "q": "NOPE"}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No asset found with tag &#x27;NOPE&#x27;.")
+        self.assertIsNone(self.client.session.get("bulk_audit", {}).get("location_id"))
+
     def test_label_print_anonymous_redirected(self):
         """
         The label printing page also requires login.

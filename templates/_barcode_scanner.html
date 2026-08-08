@@ -3,6 +3,7 @@
     class="icon-btn scanner-trigger"
     data-target="{{ target }}"
     data-dialog="scanner-dialog-{{ target }}"
+    {% if submit_on_scan %}data-submit-on-scan="1"{% endif %}
     title="Scan barcode"
 >
     <i class="fas fa-barcode fa-width-fixed"></i>

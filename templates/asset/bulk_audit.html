@@ -8,7 +8,7 @@
 <form method="post" action="{% url 'bulk-audit-location' %}">
     {% csrf_token %}
     <div class="actions">
-        {% include "asset/_location_field.html" with field=location_form.location exclude_pk="" current_value=location scan_placeholder=True %}
+        {% include "asset/_location_field.html" with field=location_form.location exclude_pk="" current_value=location search_value=location_search scan_placeholder=True submit_on_select=True submit_on_scan=True %}
         <div class="pure-controls">
             <button type="submit" class="audit">Set&nbsp;Location</button>
         </div>
