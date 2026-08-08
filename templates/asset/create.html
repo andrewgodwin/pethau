@@ -22,6 +22,11 @@
         {% include "model/_field.html" %}
     </fieldset>
     <fieldset>
+        <legend>Status</legend>
+        {% include "_field.html" with field=form.status %}
+        {% include "asset/_location_field.html" with field=form.location exclude_pk="" current_value=form.selected_location %}
+    </fieldset>
+    <fieldset>
         <legend>Info</legend>
         {% include "_field.html" with field=form.name %}
         {% include "_field.html" with field=form.description %}

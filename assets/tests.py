@@ -56,10 +56,37 @@ class ViewAccessControlTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(
             reverse("asset-create"),
-            {"tag": "AER00002", "owner": self.owner.pk, "model": self.model.pk},
+            {
+                "tag": "AER00002",
+                "owner": self.owner.pk,
+                "model": self.model.pk,
+                "status": "active",
+            },
         )
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Asset.objects.filter(tag="AER00002").exists())
+
+    def test_create_sets_initial_history_status_and_location(self):
+        """
+        The status/location picked on the create form land on the asset's initial
+        history entry.
+        """
+        self.grant("add_asset")
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("asset-create"),
+            {
+                "tag": "AER00003",
+                "owner": self.owner.pk,
+                "model": self.model.pk,
+                "status": "needs_repair",
+                "location": self.asset.pk,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        created = Asset.objects.get(tag="AER00003")
+        self.assertEqual(created.current_history.status, "needs_repair")
+        self.assertEqual(created.current_history.location, self.asset)
 
     def test_delete_requires_delete_permission(self):
         """

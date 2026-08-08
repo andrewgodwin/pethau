@@ -31,7 +31,17 @@ class SingleImageMixin:
 class CreateAssetForm(SingleImageMixin, forms.ModelForm):
     """
     Form for creating a new asset.
+
+    The status/location fields are not on Asset itself; they're used to populate the
+    asset's initial AssetHistory entry.
     """
+
+    status = forms.ChoiceField(choices=AssetHistory.STATUS_CHOICES, initial="active")
+    location = forms.ModelChoiceField(
+        queryset=Asset.objects.filter(deleted__isnull=True).order_by("tag"),
+        required=False,
+        widget=forms.HiddenInput,
+    )
 
     class Meta:
         model = Asset
@@ -61,6 +71,17 @@ class CreateAssetForm(SingleImageMixin, forms.ModelForm):
             default_owner = Owner.objects.filter(default=True).first()
             if default_owner:
                 self.fields["owner"].initial = default_owner
+
+    @property
+    def selected_location(self):
+        """
+        The asset currently chosen as the location, so the combo box can re-display it
+        after a failed submission.
+        """
+        value = self["location"].value()
+        if not value or not str(value).isdigit():
+            return None
+        return self.fields["location"].queryset.filter(pk=value).first()
 
 
 class EditAssetForm(SingleImageMixin, forms.ModelForm):

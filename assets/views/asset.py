@@ -32,7 +32,8 @@ class AssetCreateView(LoginAndPermissionRequiredMixin, FormView):
         form.save_image(asset)
         history = AssetHistory.objects.create(
             asset=asset,
-            status="active",
+            status=form.cleaned_data["status"],
+            location=form.cleaned_data["location"],
             notes="Asset created",
         )
         asset.current_history = history
