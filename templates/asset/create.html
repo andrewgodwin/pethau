@@ -22,21 +22,20 @@
         {% include "model/_field.html" %}
     </fieldset>
     <fieldset>
-        <legend>Status</legend>
+        <legend>Info</legend>
+        {% include "_field.html" with field=form.name %}
         {% include "_field.html" with field=form.status %}
         {% include "asset/_location_field.html" with field=form.location exclude_pk="" current_value=form.selected_location %}
     </fieldset>
-    <fieldset>
-        <legend>Info</legend>
-        {% include "_field.html" with field=form.name %}
-        {% include "_field.html" with field=form.description %}
-    </fieldset>
-    <fieldset>
-        <legend>Extra</legend>
-        {% include "_field.html" with field=form.category %}
-        {% include "_field.html" with field=form.notes %}
-        {% include "_field.html" with field=form.serial %}
-    </fieldset>
+    <details class="collapsible-fieldset" {% if form.category.errors or form.notes.errors or form.serial.errors %}open{% endif %}>
+        <summary>Extra</summary>
+        <fieldset>
+            {% include "_field.html" with field=form.category %}
+            {% include "_field.html" with field=form.description %}
+            {% include "_field.html" with field=form.notes %}
+            {% include "_field.html" with field=form.serial %}
+        </fieldset>
+    </details>
     {% include "_image_field.html" %}
     <div class="footer">
         <button type="submit" class="pure-button pure-button-primary">Create</button>

@@ -385,7 +385,8 @@ body {
     color: var(--content-text);
 }
 
-.context-box legend {
+.context-box legend,
+.context-box .collapsible-fieldset > summary {
     margin: -0.4rem 0 -0.4rem 0;
     padding-left: 2rem;
     border-bottom: 0;
@@ -393,6 +394,14 @@ body {
     font-weight: bold;
     letter-spacing: 2px;
     color: var(--content-text-secondary);
+}
+
+/* A fieldset the user can fold away; the summary stands in for the legend. */
+.context-box .collapsible-fieldset > summary {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+    user-select: none;
 }
 
 .context-box fieldset .image-gallery {
@@ -960,7 +969,8 @@ Hides the menu at `48rem`, but modify this based on your app's needs.
         line-height: 1.3rem;
     }
 
-    .context-box legend {
+    .context-box legend,
+    .context-box .collapsible-fieldset > summary {
         padding-left: 20%;
     }
 
