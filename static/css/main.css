@@ -753,7 +753,8 @@ h2.subtitle {
 .item-entry .item-actions a {
     background-color: var(--highlight-color);
     color: var(--highlight-color-text);
-    padding: 0.3rem 0.3rem;
+    padding: 0.1rem 0.3rem;
+    margin: 0 0.1rem;
     border-radius: var(--radius);
 }
 
