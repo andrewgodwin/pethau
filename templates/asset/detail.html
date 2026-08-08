@@ -77,9 +77,9 @@
             <small>{{ history.when|date:"Y-m-d H:i" }}</small>
         </div>
         <div class="pure-u-1 pure-u-md-1-2">
-            {% include "_status.html" with history=asset.current_history empty_text="unknown" %}
-            {% if asset.current_history.location %}
-                <small><a class="location" href="{{ asset.current_history.location.urls.view }}">{{ asset.current_history.location.name|default:asset.current_history.location.tag }}</a></small>
+            {% include "_status.html" with empty_text="unknown" %}
+            {% if history.location %}
+            <small><a class="location" href="{{ history.location.urls.view }}">{{ history.location.name|default:history.location.tag }}</a></small>
             {% endif %}
         </div>
         <div class="pure-u-1">
